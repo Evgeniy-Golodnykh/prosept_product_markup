@@ -16,6 +16,8 @@ get_user_manager_context = contextlib.asynccontextmanager(get_user_manager)
 async def create_user(
         email: EmailStr,
         password: str,
+        first_name: str,
+        last_name: str,
         is_superuser: bool = False
 ):
     try:
@@ -26,6 +28,8 @@ async def create_user(
                         UserCreate(
                             email=email,
                             password=password,
+                            first_name=first_name,
+                            last_name=last_name,
                             is_superuser=is_superuser
                         )
                     )
@@ -39,5 +43,7 @@ async def create_first_superuser():
         await create_user(
             email=settings.first_superuser_email,
             password=settings.first_superuser_password,
+            first_name=settings.first_superuser_first_name,
+            last_name=settings.first_superuser_last_name,
             is_superuser=True,
         )

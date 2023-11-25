@@ -5,6 +5,7 @@ fastapi-users-db-sqlalchemy==4.0.5
 pydantic==1.10.12
 python-dotenv==1.0.0
 SQLAlchemy==1.4.36
+aiosqlite==0.17.0
 uvicorn[standard]==0.17.6
 psycopg2-binary==2.9.9
 

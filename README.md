@@ -28,7 +28,9 @@ APP_DESCRIPTION=Сервис для автоматизации сопостав�
 DATABASE_URL=sqlite+aiosqlite:///./product_markup.db
 SECRET=top_secret
 FIRST_SUPERUSER_EMAIL=admin@gmail.com
-FIRST_SUPERUSER_PASSWORD=admin
+FIRST_SUPERUSER_PASSWORD=secret_password
+FIRST_SUPERUSER_FIRST_NAME=some_name
+FIRST_SUPERUSER_LAST_NAME=some_lastname
 ```
 6. To create database use command
 ```bash
