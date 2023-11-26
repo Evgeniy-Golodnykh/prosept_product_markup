@@ -1,42 +1,16 @@
 from sqlalchemy import Column, String, Date, ForeignKey, Integer, Float
-from sqlalchemy.orm import relationship
 
-from app.core.db import Base
+from app.core.db import Base, LONG_LENGTH, SHORT_LENGTH
 
 
 class Dealer(Base):
-    name = Column(String(100), unique=True, nullable=False)
+    name = Column(String(SHORT_LENGTH), unique=True, nullable=False)
 
 
 class DealerPrice(Base):
-    product_key = Column(Integer, nullable=False)
+    product_key = Column(Integer, unique=True, nullable=False)
     price = Column(Float, nullable=False)
-    product_url = Column(String(5000))
-    product_name = Column(String(5000), nullable=False)
+    product_url = Column(String(LONG_LENGTH))
+    product_name = Column(String(LONG_LENGTH), nullable=False)
     date = Column(Date, nullable=False)
     dealer_id = Column(Integer, ForeignKey('dealer.id'))
-
-
-class Product(Base):
-    id = Column(Integer, primary_key=True)
-    article = Column(String(5000), nullable=False)
-    ean_13 = Column(Float)
-    name = Column(String(5000))
-    cost = Column(Float, nullable=False)
-    recommended_price = Column(Float)
-    category_id = Column(Float)
-    ozon_name = Column(String(5000))
-    name_1c = Column(String(5000))
-    wb_name = Column(String(5000))
-    ozon_article = Column(Float)
-    wb_article = Column(Float)
-    ym_article = Column(String(100))
-    wb_article_td = Column(String(100))
-
-
-class ProductDealerKey(Base):
-    key = Column(Integer, nullable=False)
-    dealer_id = Column(Integer, ForeignKey('dealer.id'))
-    product_id = Column(Integer, ForeignKey('product.id'))
-
-
