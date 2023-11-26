@@ -18,12 +18,12 @@ class DealerPrice(Base):
 
 
 class Product(Base):
-    id = Column(Integer, nullable=False)
+    id = Column(Integer, primary_key=True)
     article = Column(String(5000), nullable=False)
     ean_13 = Column(Float)
     name = Column(String(5000))
     cost = Column(Float, nullable=False)
-    recommended_price = Column(Float, nullable=False)
+    recommended_price = Column(Float)
     category_id = Column(Float)
     ozon_name = Column(String(5000))
     name_1c = Column(String(5000))
