@@ -4,7 +4,7 @@ from fastapi.encoders import jsonable_encoder
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models import User
+from app.models import Dealer, DealerPrice, Product, ProductDealerKey, User
 
 
 class CRUDBase:
@@ -38,8 +38,6 @@ class CRUDBase:
             user: Optional[User] = None
     ):
         object_data = object.dict()
-        if user is not None:
-            object_data['user_id'] = user.id
         db_object = self.model(**object_data)
         session.add(db_object)
         await session.commit()
@@ -71,3 +69,15 @@ class CRUDBase:
         await session.delete(db_object)
         await session.commit()
         return db_object
+
+
+class CRUDDealer(CRUDBase):
+    pass
+
+
+class CRUDDealerPrice(CRUDBase):
+    pass
+
+
+dealer_crud = CRUDDealer(Dealer)
+dealer_price_crud = CRUDDealerPrice(DealerPrice)
