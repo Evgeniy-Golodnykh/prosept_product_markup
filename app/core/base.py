@@ -1,4 +1,6 @@
 """Импорты класса Base и всех моделей для Alembic."""
 
-from app.core.db import Base # noqa
-from app.models import User, Dealer, DealerPrice, Product, ProductDealerKey # noqa
+from app.core.db import Base  # noqa
+from app.models import (  # noqa
+    Dealer, DealerPrice, Product, ProductDealerKey, User,
+)

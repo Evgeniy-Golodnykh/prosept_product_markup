@@ -1,10 +1,9 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.crud.base import dealer_price_crud
 from app.core.db import get_async_session
-from app.schemas.dealer import DealerPriceCreate, DealerPriceDB
-
+from app.crud import dealer_price_crud
+from app.schemas.dealer_price import DealerPriceCreate, DealerPriceDB
 
 router = APIRouter()
 

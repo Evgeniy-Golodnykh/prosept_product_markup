@@ -1,10 +1,11 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.crud.base import product_dealer_key_crud
 from app.core.db import get_async_session
-from app.schemas.product import ProductDealerKeyCreate, ProducDealerKeyDB
-
+from app.crud import product_dealer_key_crud
+from app.schemas.product_dealer_key import (
+    ProducDealerKeyDB, ProductDealerKeyCreate,
+)
 
 router = APIRouter()
 

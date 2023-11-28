@@ -1,6 +1,6 @@
-from sqlalchemy import Column, String, ForeignKey, Integer, Float
+from sqlalchemy import Column, Float, String
 
-from app.core.db import Base, LONG_LENGTH, SHORT_LENGTH
+from app.core.db import LONG_LENGTH, SHORT_LENGTH, Base
 
 
 class Product(Base):
@@ -17,9 +17,3 @@ class Product(Base):
     wb_article = Column(Float)
     ym_article = Column(String(SHORT_LENGTH))
     wb_article_td = Column(String(SHORT_LENGTH))
-
-
-class ProductDealerKey(Base):
-    key = Column(Integer, ForeignKey('dealerprice.product_key'))
-    dealer_id = Column(Integer, ForeignKey('dealer.id'))
-    product_id = Column(Integer, ForeignKey('product.id'))
