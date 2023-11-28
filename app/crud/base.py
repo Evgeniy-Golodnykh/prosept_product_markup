@@ -79,5 +79,15 @@ class CRUDDealerPrice(CRUDBase):
     pass
 
 
+class CRUDProduct(CRUDBase):
+    pass
+
+
+class CRUDProductDealerKey(CRUDBase):
+    pass
+
+
 dealer_crud = CRUDDealer(Dealer)
 dealer_price_crud = CRUDDealerPrice(DealerPrice)
+product_crud = CRUDProduct(Product)
+product_dealer_key_crud = CRUDProductDealerKey(ProductDealerKey)
