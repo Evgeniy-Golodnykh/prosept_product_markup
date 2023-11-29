@@ -4,11 +4,14 @@ from sqlalchemy.orm import declarative_base, declared_attr, sessionmaker
 
 from app.core.config import settings
 
+LONG_LENGTH = 5000
+SHORT_LENGTH = 100
+
 
 class PreBase:
 
     @declared_attr
-    def __tablename__(cls):
+    def __tablename__(cls):  # noqa
         return cls.__name__.lower()
 
     id = Column(Integer, primary_key=True)

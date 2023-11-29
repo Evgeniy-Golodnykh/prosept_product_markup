@@ -40,3 +40,6 @@ alembic upgrade head
 ```bash
 uvicorn app.main:app --reload
 ```
+
+### CI/CD pipeline status
+[![Prosept product markup workflow](https://github.com/Evgeniy-Golodnykh/prosept_product_markup/actions/workflows/prosept_product_markup_workflow.yml/badge.svg)](https://github.com/Evgeniy-Golodnykh/prosept_product_markup/actions/workflows/prosept_product_markup_workflow.yml)
