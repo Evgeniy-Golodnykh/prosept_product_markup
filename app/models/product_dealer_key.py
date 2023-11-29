@@ -1,9 +1,20 @@
-from sqlalchemy import Column, ForeignKey, Integer
+from datetime import datetime
+
+from sqlalchemy import Column, DateTime, ForeignKey, Integer
+from sqlalchemy.orm import relationship
 
 from app.core.db import Base
 
 
 class ProductDealerKey(Base):
-    key = Column(Integer, ForeignKey('dealerprice.product_key'))
-    dealer_id = Column(Integer, ForeignKey('dealer.id'))
-    product_id = Column(Integer, ForeignKey('product.id'))
+    key_id = Column(
+        Integer,
+        ForeignKey('dealerprice.product_key'),
+        nullable=False,
+        unique=True,
+    )
+    product_id = Column(Integer, ForeignKey('product.id'), default=None)
+    create_date = Column('дата рекомендации', DateTime, default=datetime.now)
+
+    dealer = relationship('DealerPrice')
+    product = relationship('Product')
