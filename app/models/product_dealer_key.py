@@ -14,7 +14,7 @@ class ProductDealerKey(Base):
         unique=True,
     )
     product_id = Column(Integer, ForeignKey('product.id'), default=None)
-    create_date = Column('дата рекомендации', DateTime, default=datetime.now)
+    create_date = Column(DateTime, default=datetime.now)
 
     dealer = relationship('DealerPrice')
     product = relationship('Product')

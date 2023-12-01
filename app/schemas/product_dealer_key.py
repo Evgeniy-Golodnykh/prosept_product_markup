@@ -10,7 +10,7 @@ class ProductDealerKeyCreate(BaseModel):
 
 class ProducDealerKeyDB(ProductDealerKeyCreate):
     id: int
-    date: datetime
+    create_date: datetime
 
     class Config:
         orm_mode = True
