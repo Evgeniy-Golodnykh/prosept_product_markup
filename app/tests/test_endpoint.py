@@ -1,6 +1,6 @@
 from fastapi.testclient import TestClient
 from http import HTTPStatus
-from app.main import app
+from . import app
 from app.schemas.dealer import DealerCreate
 from app.schemas.dealer_price import DealerPriceCreate
 from app.schemas.product import ProductCreate
@@ -10,38 +10,38 @@ from app.schemas.product_dealer_key import ProductDealerKeyCreate
 client = TestClient(app)
 
 def test_get_all_dealers():
-    response = client.get("/")
+    response = client.get("/dealer")
     assert response.status_code == HTTPStatus.OK
 
 def test_create_dealer():
     dealer = DealerCreate(name="Test Dealer")
-    response = client.post("/", json=dealer.dict())
+    response = client.post("/dealer", json=dealer.dict())
     assert response.status_code == HTTPStatus.CREATED
     assert response.json()["name"] == dealer.name
 
 def test_create_duplicate_dealer():
     dealer = DealerCreate(name="Test Dealer")
-    response = client.post("/", json=dealer.dict())
+    response = client.post("/dealer", json=dealer.dict())
     assert response.status_code == HTTPStatus.CREATED
     assert response.json()["name"] == dealer.name
-    response = client.post("/", json=dealer.dict())
+    response = client.post("/dealer", json=dealer.dict())
     assert response.status_code == HTTPStatus.BAD_REQUEST
 
 def test_get_all_dealer_prices():
-    response = client.get("/")
+    response = client.get("/dealerprice")
     assert response.status_code == HTTPStatus.OK
 
 def test_create_dealer_price():
     dealer_price = DealerPriceCreate(
-        product_key=1,
-        price=100.0,
-        product_url="http://testproduct.com",
+        product_key=100000,
+        price=100.00,
+        product_url="https://akson.ru//p/sredstvo_500ml/",
         product_name="Test Product",
         date="2022-01-01",
         status="none",
         dealer_id=1
     )
-    response = client.post("/", json=dealer_price.dict())
+    response = client.post("/dealerprice", json=dealer_price.dict())
     assert response.status_code == HTTPStatus.CREATED
     assert response.json()["product_key"] == dealer_price.product_key
     assert response.json()["price"] == dealer_price.price
@@ -52,14 +52,14 @@ def test_create_dealer_price():
     assert response.json()["dealer_id"] == dealer_price.dealer_id
 
 def test_get_all_products():
-    response = client.get("/")
+    response = client.get("/product")
     assert response.status_code == HTTPStatus.OK
     assert response.headers["content-type"] == "application/json"
 
 def test_create_product():
     product = ProductCreate(
         article="Test Article",
-        ean_13=1234567890123,
+        ean_13=1234567890123.0,
         name="Test Product",
         cost=100.0,
         recommended_price=150.0,
@@ -72,7 +72,7 @@ def test_create_product():
         ym_article="YM123",
         wb_article_td="WB123TD",
     )
-    response = client.post("/", json=product.dict())
+    response = client.post("/product", json=product.dict())
     assert response.status_code == HTTPStatus.CREATED
     assert response.json()["article"] == product.article
     assert response.json()["ean_13"] == product.ean_13
@@ -89,7 +89,7 @@ def test_create_product():
     assert response.json()["wb_article_td"] == product.wb_article_td
 
 def test_get_all_markups():
-    response = client.get("/")
+    response = client.get("/productdealerkey")
     assert response.status_code == HTTPStatus.OK
 
 def test_create_markup():
@@ -97,7 +97,7 @@ def test_create_markup():
         key_id=1,
         product_id=1,
     )
-    response = client.post("/", json=markup.dict())
+    response = client.post("/productdealerkey", json=markup.dict())
     assert response.status_code == HTTPStatus.CREATED
     assert response.json()["key_id"] == markup.key_id
     assert response.json()["product_id"] == markup.product_id
