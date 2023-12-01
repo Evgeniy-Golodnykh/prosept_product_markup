@@ -1,6 +1,6 @@
 from fastapi.testclient import TestClient
 from http import HTTPStatus
-from . import app
+from app.main import app
 from app.schemas.dealer import DealerCreate
 from app.schemas.dealer_price import DealerPriceCreate
 from app.schemas.product import ProductCreate
