@@ -21,7 +21,7 @@ async def check_dealer_name_duplicate(
 
 
 async def check_dealer_price_exists(
-        dealer_price_key: int,
+        dealer_price_key: str,
         session: AsyncSession,
 ) -> None:
     dealer_price_id = await dealer_price_crud.get_dealer_price_id_by_key(

@@ -7,6 +7,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.db import get_async_session
 from app.core.logging import configure_logging
+from app.crud import dealer_price_crud
 from app.models import Dealer, DealerPrice, Product
 
 START_MESSAGE = 'Downloading data from the file {file} has started'
@@ -57,6 +58,10 @@ async def load_dealer_prices(
             try:
                 (id, product_key, price, product_url,
                  product_name, date, dealer_id) = row
+                if await dealer_price_crud.get_dealer_price_id_by_key(
+                    product_key, session
+                ):
+                    continue
                 db_obj = DealerPrice(
                     product_key=product_key,
                     price=price,
