@@ -45,7 +45,7 @@ class UserManager(IntegerIDMixin, BaseUserManager[User, int]):
             raise InvalidPasswordException(
                 reason='Password should be at least 6 characters'
             )
-        if user.email.lower() in password.lower():
+        if user.email in password:
             raise InvalidPasswordException(
                 reason='Password should not contain e-mail'
             )
