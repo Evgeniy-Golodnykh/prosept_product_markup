@@ -22,6 +22,7 @@ async def get_all_dealers(
 @router.post(
     '/',
     response_model=DealerDB,
+    status_code=201,
 )
 async def create_dealer(
         dealer: DealerCreate,

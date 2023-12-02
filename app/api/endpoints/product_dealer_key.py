@@ -24,6 +24,7 @@ async def get_all_markups(
 @router.post(
     '/',
     response_model=ProducDealerKeyDB,
+    status_code=201,
 )
 async def create_markup(
         markup: ProductDealerKeyCreate,

@@ -1,8 +1,8 @@
-"""add product models
+"""First migration
 
-Revision ID: 94c87ec1f5fc
+Revision ID: 4fd2d52d45bf
 Revises: 
-Create Date: 2023-11-27 00:25:44.002629
+Create Date: 2023-12-02 15:23:17.896305
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '94c87ec1f5fc'
+revision = '4fd2d52d45bf'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -60,20 +60,21 @@ def upgrade():
     sa.Column('product_url', sa.String(length=5000), nullable=True),
     sa.Column('product_name', sa.String(length=5000), nullable=False),
     sa.Column('date', sa.Date(), nullable=False),
-    sa.Column('dealer_id', sa.Integer(), nullable=True),
+    sa.Column('status', sa.Enum('none', 'true', 'false', 'delay', name='markupstatus'), nullable=False),
+    sa.Column('dealer_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['dealer_id'], ['dealer.id'], ),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('product_key')
     )
     op.create_table('productdealerkey',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('key', sa.Integer(), nullable=True),
-    sa.Column('dealer_id', sa.Integer(), nullable=True),
+    sa.Column('key_id', sa.Integer(), nullable=False),
     sa.Column('product_id', sa.Integer(), nullable=True),
-    sa.ForeignKeyConstraint(['dealer_id'], ['dealer.id'], ),
-    sa.ForeignKeyConstraint(['key'], ['dealerprice.product_key'], ),
+    sa.Column('create_date', sa.DateTime(), nullable=True),
+    sa.ForeignKeyConstraint(['key_id'], ['dealerprice.product_key'], ),
     sa.ForeignKeyConstraint(['product_id'], ['product.id'], ),
-    sa.PrimaryKeyConstraint('id')
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('key_id')
     )
     # ### end Alembic commands ###
 
