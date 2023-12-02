@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from sqlalchemy import Column, DateTime, ForeignKey, Integer
+from sqlalchemy import Column, DateTime, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
 
 from app.core.db import Base
@@ -8,7 +8,7 @@ from app.core.db import Base
 
 class ProductDealerKey(Base):
     key_id = Column(
-        Integer,
+        String,
         ForeignKey('dealerprice.product_key'),
         nullable=False,
         unique=True,
