@@ -1,8 +1,8 @@
 """init
 
-Revision ID: 73ce2745d5e2
+Revision ID: f70a0c0ac3bf
 Revises: 
-Create Date: 2023-12-02 12:01:38.268567
+Create Date: 2023-12-02 22:29:53.035126
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '73ce2745d5e2'
+revision = 'f70a0c0ac3bf'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -55,7 +55,7 @@ def upgrade():
     op.create_index(op.f('ix_user_email'), 'user', ['email'], unique=True)
     op.create_table('dealerprice',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('product_key', sa.String(), nullable=False),
+    sa.Column('product_key', sa.String(length=5000), nullable=False),
     sa.Column('price', sa.String(length=100), nullable=True),
     sa.Column('product_url', sa.String(length=5000), nullable=True),
     sa.Column('product_name', sa.String(length=5000), nullable=False),
@@ -63,7 +63,8 @@ def upgrade():
     sa.Column('status', sa.Enum('none', 'true', 'false', 'delay', name='markupstatus'), nullable=False),
     sa.Column('dealer_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['dealer_id'], ['dealer.id'], ),
-    sa.PrimaryKeyConstraint('id')
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('product_key')
     )
     op.create_table('productdealerkey',
     sa.Column('id', sa.Integer(), nullable=False),
