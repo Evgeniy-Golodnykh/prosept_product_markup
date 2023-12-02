@@ -1,5 +1,6 @@
 aiosqlite==0.17.0
 alembic==1.7.7
+asyncpg==0.29.0
 fastapi==0.78.0
 fastapi-users[sqlalchemy]==10.0.6
 fastapi-users-db-sqlalchemy==4.0.5

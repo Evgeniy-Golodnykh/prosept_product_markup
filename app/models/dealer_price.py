@@ -14,7 +14,7 @@ class MarkupStatus(enum.Enum):
 
 
 class DealerPrice(Base):
-    product_key = Column(String(LONG_LENGTH), nullable=False)
+    product_key = Column(String(LONG_LENGTH), nullable=False, unique=True)
     price = Column(String(SHORT_LENGTH))
     product_url = Column(String(LONG_LENGTH))
     product_name = Column(String(LONG_LENGTH), nullable=False)
