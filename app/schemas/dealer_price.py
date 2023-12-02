@@ -8,8 +8,8 @@ from app.models.dealer_price import MarkupStatus
 
 
 class DealerPriceCreate(BaseModel):
-    product_key: str = Field(..., max_length=SHORT_LENGTH)
-    price: Optional[str] = Field(..., max_length=LONG_LENGTH)
+    product_key: str = Field(..., max_length=LONG_LENGTH)
+    price: Optional[str] = Field(..., max_length=SHORT_LENGTH)
     product_url: Optional[str] = Field(..., max_length=LONG_LENGTH)
     product_name: str = Field(..., max_length=LONG_LENGTH)
     date: date
