@@ -6,5 +6,3 @@ RUN pip3 install -r requirements.txt --no-cache-dir
 COPY app app
 COPY alembic alembic
 COPY alembic.ini .
-COPY product_markup.db .
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

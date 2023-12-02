@@ -24,11 +24,12 @@ async def get_all_markups(
 @router.post(
     '/',
     response_model=ProducDealerKeyDB,
+    status_code=201
 )
 async def create_markup(
         markup: ProductDealerKeyCreate,
         session: AsyncSession = Depends(get_async_session),
 ):
     await check_product_exists(markup.product_id, session)
-    await check_dealer_price_exists(markup.key, session)
+    await check_dealer_price_exists(markup.key_id, session)
     return await product_dealer_key_crud.create(markup, session)

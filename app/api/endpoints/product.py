@@ -21,6 +21,7 @@ async def get_all_products(
 @router.post(
     '/',
     response_model=ProductDB,
+    status_code=201
 )
 async def create_product(
         product: ProductCreate,
