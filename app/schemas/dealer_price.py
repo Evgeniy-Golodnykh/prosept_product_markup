@@ -14,6 +14,7 @@ class DealerPriceCreate(BaseModel):
     product_name: str = Field(..., max_length=LONG_LENGTH)
     date: date
     dealer_id: int
+    status: MarkupStatus
 
 
 class DealerPriceDB(DealerPriceCreate):

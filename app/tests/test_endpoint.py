@@ -8,7 +8,7 @@ from app.schemas.product_dealer_key import ProductDealerKeyCreate
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 import pytest
-
+from app.models.dealer_price import MarkupStatus
 
 DATABASE_URL = 'sqlite:///./test.db'
 
@@ -34,7 +34,6 @@ def transaction():
     yield
 
     session.rollback()
-    session.commit()
     session.close()
 
 def test_get_all_dealers():
@@ -42,13 +41,13 @@ def test_get_all_dealers():
     assert response.status_code == HTTPStatus.OK
 
 def test_create_dealer():
-    dealer = DealerCreate(name='Test1')
+    dealer = DealerCreate(name='Test1100')
     response = client.post('/dealer/', json=dealer.dict())
     assert response.status_code == HTTPStatus.CREATED
     assert response.json()['name'] == dealer.name
 
 def test_create_duplicate_dealer():
-    dealer = DealerCreate(name='Test2')
+    dealer = DealerCreate(name='Test2100')
     response = client.post('/dealer/', json=dealer.dict())
     assert response.status_code == HTTPStatus.CREATED
     assert response.json()['name'] == dealer.name
@@ -61,16 +60,17 @@ def test_get_all_dealer_prices():
 
 def test_create_dealer_price():
     dealer_price = DealerPriceCreate(
-        product_key=200000,
+        product_key=750000,
         price=100.00,
         product_url='https://akson.ru//p/sredstvo_500ml/',
         product_name='Test Product',
         date='2022-01-01',
-        status='none',
+        status=MarkupStatus.none.value,
         dealer_id=1
     )
     dealer_price_dict = dealer_price.dict()
     dealer_price_dict['date'] = dealer_price_dict['date'].isoformat()
+    dealer_price_dict['status'] = dealer_price.status.value
     response = client.post('/dealerprice/', json=dealer_price_dict)
     assert response.status_code == HTTPStatus.CREATED
     assert response.json()['product_key'] == dealer_price.product_key
@@ -78,7 +78,7 @@ def test_create_dealer_price():
     assert response.json()['product_url'] == dealer_price.product_url
     assert response.json()['product_name'] == dealer_price.product_name
     assert response.json()['date'] == dealer_price_dict['date']
-    assert response.json()['status'] == dealer_price.status
+    assert response.json()['status'] == dealer_price.status.value
     assert response.json()['dealer_id'] == dealer_price.dealer_id
 
 def test_get_all_products():
@@ -124,8 +124,8 @@ def test_get_all_markups():
 
 def test_create_markup():
     markup = ProductDealerKeyCreate(
-        key_id=1,
-        product_id=1,
+        key_id=2322,
+        product_id=2,
     )
     response = client.post('/productdealerkey/', json=markup.dict())
     assert response.status_code == HTTPStatus.CREATED
