@@ -7,7 +7,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.db import get_async_session
 from app.core.logging import configure_logging
-from app.crud import dealer_price_crud
+from app.crud import dealer_crud, dealer_price_crud, product_crud
 from app.models import Dealer, DealerPrice, Product
 
 START_MESSAGE = 'Downloading data from the file {file} has started'
@@ -33,6 +33,8 @@ async def load_dealers(session: AsyncSession = Depends(get_async_session)):
         for row in reader:
             try:
                 id, name = row
+                if await dealer_crud.get_dealer_id_by_name(name, session):
+                    continue
                 db_object = Dealer(name=name)
                 session.add(db_object)
                 await session.commit()
@@ -97,6 +99,8 @@ async def load_products(session: AsyncSession = Depends(get_async_session)):
                 (num, id, article, ean_13, name, cost, recommended_price,
                  category_id, ozon_name, name_1c, wb_name, ozon_article,
                  wb_article, ym_article, wb_article_td) = row
+                if await product_crud.get_product_id_by_name(name, session):
+                    continue
                 db_obj = Product(
                     article=article,
                     ean_13=ean_13,
