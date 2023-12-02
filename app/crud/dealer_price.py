@@ -11,7 +11,7 @@ class CRUDDealerPrice(CRUDBase):
 
     async def get_dealer_price_id_by_key(
             self,
-            key: int,
+            key: str,
             session: AsyncSession,
     ) -> Optional[int]:
         db_dealer_price = await session.execute(
