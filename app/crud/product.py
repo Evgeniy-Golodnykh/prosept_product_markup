@@ -9,13 +9,13 @@ from app.models import Product
 
 class CRUDProduct(CRUDBase):
 
-    async def get_product_id_by_name(
+    async def get_product_by_name(
             self,
             name: str,
             session: AsyncSession,
     ) -> Optional[int]:
         db_product = await session.execute(
-            select(Product.id).where(Product.name == name)
+            select(Product).where(Product.name == name)
         )
         return db_product.scalars().first()
 

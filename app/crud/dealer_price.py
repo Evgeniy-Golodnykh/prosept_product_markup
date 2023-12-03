@@ -9,13 +9,13 @@ from app.models import DealerPrice
 
 class CRUDDealerPrice(CRUDBase):
 
-    async def get_dealer_price_id_by_key(
+    async def get_dealer_price_by_key(
             self,
             key: str,
             session: AsyncSession,
     ) -> Optional[int]:
         db_dealer_price = await session.execute(
-            select(DealerPrice.id).where(
+            select(DealerPrice).where(
                 DealerPrice.product_key == key
             )
         )
