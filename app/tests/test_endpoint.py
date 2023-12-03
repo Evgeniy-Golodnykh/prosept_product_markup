@@ -9,45 +9,67 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 import pytest
 from app.models.dealer_price import MarkupStatus
+from app.core.db import Base
+from app.core.db import get_async_session
+from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
+import asyncio
 
-DATABASE_URL = 'sqlite:///./test.db'
+DATABASE_URL = 'sqlite+aiosqlite:///./test.db'
 
-engine = create_engine(DATABASE_URL)
-TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+engine = create_async_engine(DATABASE_URL)
 
-def get_db():
-    db = TestingSessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+async def init_models():
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.drop_all)
+        await conn.run_sync(Base.metadata.create_all)
 
-app.dependency_overrides[get_db] = get_db
+asyncio.run(init_models())
+
+TestingSessionLocal = sessionmaker(engine, autocommit=False, autoflush=False, class_=AsyncSession)
+
+async def override_get_async_session():
+    async with TestingSessionLocal() as async_session:
+        yield async_session
+
+app.dependency_overrides[get_async_session] = override_get_async_session
 
 client = TestClient(app)
 
-@pytest.fixture(autouse=True)
-def transaction():
-    session = TestingSessionLocal()
-    session.begin_nested()
 
-    yield
 
-    session.rollback()
-    session.close()
+# def get_db():
+#     db = TestingSessionLocal()
+#     try:
+#         yield db
+#     finally:
+#         db.close()
+
+# app.dependency_overrides[get_db] = get_db
+
+# client = TestClient(app)
+
+# @pytest.fixture(autouse=True)
+# def transaction():
+#     session = TestingSessionLocal()
+#     session.begin_nested()
+
+#     yield
+
+#     session.rollback()
+#     session.close()
 
 def test_get_all_dealers():
     response = client.get('/dealer/')
     assert response.status_code == HTTPStatus.OK
 
 def test_create_dealer():
-    dealer = DealerCreate(name='Test1100')
+    dealer = DealerCreate(name='TestDealer555')
     response = client.post('/dealer/', json=dealer.dict())
     assert response.status_code == HTTPStatus.CREATED
     assert response.json()['name'] == dealer.name
 
 def test_create_duplicate_dealer():
-    dealer = DealerCreate(name='Test2100')
+    dealer = DealerCreate(name='TestDealer15')
     response = client.post('/dealer/', json=dealer.dict())
     assert response.status_code == HTTPStatus.CREATED
     assert response.json()['name'] == dealer.name
@@ -60,7 +82,7 @@ def test_get_all_dealer_prices():
 
 def test_create_dealer_price():
     dealer_price = DealerPriceCreate(
-        product_key=750000,
+        product_key=2580000,
         price=100.00,
         product_url='https://akson.ru//p/sredstvo_500ml/',
         product_name='Test Product',
@@ -89,16 +111,16 @@ def test_get_all_products():
 def test_create_product():
     product = ProductCreate(
         article='Test Article',
-        ean_13=1234567890123.0,
+        ean_13= '1234567890123.0',
         name='Test Product',
         cost=100.0,
         recommended_price=150.0,
-        category_id=1,
+        category_id='1.0',
         ozon_name='Ozon Test Product',
         name_1c='1C Test Product',
         wb_name='WB Test Product',
-        ozon_article=123456,
-        wb_article=654321,
+        ozon_article='Ozon Test Article',
+        wb_article='WB Test Article',
         ym_article='YM123',
         wb_article_td='WB123TD',
     )
@@ -124,7 +146,7 @@ def test_get_all_markups():
 
 def test_create_markup():
     markup = ProductDealerKeyCreate(
-        key_id=2322,
+        key_id=289322,
         product_id=2,
     )
     response = client.post('/productdealerkey/', json=markup.dict())
