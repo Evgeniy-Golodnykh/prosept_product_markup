@@ -21,6 +21,16 @@ async def get_all_dealer_prices(
     return await dealer_price_crud.get_multi(session)
 
 
+@router.get(
+    '/none_status',
+    response_model=list[DealerPriceDB],
+)
+async def get_all_dealer_prices_none_status(
+        session: AsyncSession = Depends(get_async_session),
+):
+    return await dealer_price_crud.get_dealer_prices_none_status(session)
+
+
 @router.post(
     '/',
     response_model=DealerPriceDB,

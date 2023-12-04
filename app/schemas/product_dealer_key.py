@@ -1,12 +1,11 @@
 from datetime import datetime
-from typing import Optional
 
 from pydantic import BaseModel
 
 
 class ProductDealerKeyCreate(BaseModel):
     key_id: str
-    product_id: Optional[int]
+    product_id: int
 
 
 class ProducDealerKeyDB(ProductDealerKeyCreate):
