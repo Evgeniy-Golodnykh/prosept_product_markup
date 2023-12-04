@@ -13,7 +13,7 @@ class CRUDProduct(CRUDBase):
             self,
             name: str,
             session: AsyncSession,
-    ) -> Optional[int]:
+    ) -> Optional[Product]:
         db_product = await session.execute(
             select(Product).where(Product.name == name)
         )

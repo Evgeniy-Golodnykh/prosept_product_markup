@@ -2,7 +2,7 @@ from fastapi import HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.crud import dealer_crud, dealer_price_crud, product_crud
-from app.models import DealerPrice
+from app.models import DealerPrice, Product
 
 DEALER_EXISTS_ERROR = 'Дилер с таким именем уже существует!'
 DEALER_PRICE_NOT_EXISTS_ERROR = 'Товар маркетплейса с ключом #{key} не найден'
@@ -39,10 +39,11 @@ async def check_dealer_price_exists(
 async def check_product_exists(
         product_id: int,
         session: AsyncSession,
-) -> None:
+) -> Product:
     product = await product_crud.get(product_id, session)
     if product is None:
         raise HTTPException(
             status_code=404,
             detail=PRODUCT_NOT_EXISTS_ERROR.format(id=product_id)
         )
+    return product
