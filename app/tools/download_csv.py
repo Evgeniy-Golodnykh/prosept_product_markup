@@ -35,7 +35,7 @@ async def load_dealers(session: AsyncSession = Depends(get_async_session)):
                 id, name = row
                 if await dealer_crud.get_dealer_id_by_name(name, session):
                     continue
-                db_object = Dealer(name=name)
+                db_object = Dealer(id=int(id), name=name)
                 session.add(db_object)
                 await session.commit()
                 count += 1
@@ -65,6 +65,7 @@ async def load_dealer_prices(
                 ):
                     continue
                 db_obj = DealerPrice(
+                    id=int(id),
                     product_key=product_key,
                     price=price,
                     product_url=product_url,
@@ -102,6 +103,7 @@ async def load_products(session: AsyncSession = Depends(get_async_session)):
                 if await product_crud.get_product_by_name(name, session):
                     continue
                 db_obj = Product(
+                    id=int(id),
                     article=article,
                     ean_13=ean_13,
                     name=name,
