@@ -2,6 +2,8 @@ version: '3.3'
 services:
   db:
     image: postgres:13.0-alpine
+    environment:
+        - TZ=Europe/Moscow
     restart: always
     volumes:
       - db_data:/var/lib/postgresql/data/
@@ -10,8 +12,10 @@ services:
 
   backend:
     image: evgenferrum/prosept_product_markup:latest
+    environment:
+        - TZ=Europe/Moscow
     restart: always
-    command: "sh -c 'alembic upgrade head && uvicorn app.main:app --bind 0.0.0.0:8000'"
+    command: "sh -c 'alembic upgrade head && gunicorn app.main:app --workers 4 --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000'"
     volumes:
       - static_value:/app/static/
       - media_value:/app/media/
@@ -22,6 +26,8 @@ services:
 
   nginx:
     image: nginx:1.21.3
+    environment:
+        - TZ=Europe/Moscow
     restart: always
     ports:
       - "80:80"

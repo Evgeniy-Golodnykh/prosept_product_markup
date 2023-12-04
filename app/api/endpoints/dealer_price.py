@@ -1,9 +1,12 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.api.validators import check_dealer_price_exists
 from app.core.db import get_async_session
 from app.crud import dealer_price_crud
-from app.schemas.dealer_price import DealerPriceCreate, DealerPriceDB
+from app.schemas.dealer_price import (
+    DealerPriceCreate, DealerPriceDB, DealerPriceUpdate,
+)
 
 router = APIRouter()
 
@@ -28,3 +31,17 @@ async def create_dealer_price(
         session: AsyncSession = Depends(get_async_session),
 ):
     return await dealer_price_crud.create(dealer, session)
+
+
+@router.patch(
+    '/{dealer_price_key}',
+    response_model=DealerPriceDB,
+    status_code=201
+)
+async def update_dealer_price(
+        dealer_price_key: str,
+        object: DealerPriceUpdate,
+        session: AsyncSession = Depends(get_async_session),
+):
+    dealer_price = await check_dealer_price_exists(dealer_price_key, session)
+    return await dealer_price_crud.update(dealer_price, object, session)

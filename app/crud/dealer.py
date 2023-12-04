@@ -15,9 +15,7 @@ class CRUDDealer(CRUDBase):
             session: AsyncSession,
     ) -> Optional[int]:
         db_dealer_price = await session.execute(
-            select(Dealer.id).where(
-                Dealer.name == name
-            )
+            select(Dealer.id).where(Dealer.name == name)
         )
         return db_dealer_price.scalars().first()
 

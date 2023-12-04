@@ -16,6 +16,10 @@ class DealerPriceCreate(BaseModel):
     dealer_id: int
 
 
+class DealerPriceUpdate(BaseModel):
+    status: MarkupStatus
+
+
 class DealerPriceDB(DealerPriceCreate):
     id: int
     status: MarkupStatus

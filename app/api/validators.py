@@ -2,10 +2,11 @@ from fastapi import HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.crud import dealer_crud, dealer_price_crud, product_crud
+from app.models import DealerPrice
 
 DEALER_EXISTS_ERROR = 'Дилер с таким именем уже существует!'
-DEALER_PRICE_NOT_EXISTS_ERROR = 'Товар маркетплейса с ключом "{key}" не найден'
-PRODUCT_NOT_EXISTS_ERROR = 'Товар заказчика с id "{id}" не найден'
+DEALER_PRICE_NOT_EXISTS_ERROR = 'Товар маркетплейса с ключом #{key} не найден'
+PRODUCT_NOT_EXISTS_ERROR = 'Товар заказчика с id #{id} не найден'
 
 
 async def check_dealer_name_duplicate(
@@ -21,17 +22,18 @@ async def check_dealer_name_duplicate(
 
 
 async def check_dealer_price_exists(
-        dealer_price_key: int,
+        dealer_price_key: str,
         session: AsyncSession,
-) -> None:
-    dealer_price_id = await dealer_price_crud.get_dealer_price_id_by_key(
+) -> DealerPrice:
+    dealer_price = await dealer_price_crud.get_dealer_price_by_key(
         dealer_price_key, session
     )
-    if dealer_price_id is None:
+    if dealer_price is None:
         raise HTTPException(
             status_code=404,
-            detail=DEALER_PRICE_NOT_EXISTS_ERROR.format(key=dealer_price_id)
+            detail=DEALER_PRICE_NOT_EXISTS_ERROR.format(key=dealer_price_key)
         )
+    return dealer_price
 
 
 async def check_product_exists(
