@@ -24,7 +24,7 @@ async def get_all_dealer_prices(
 @router.post(
     '/',
     response_model=DealerPriceDB,
-    status_code=201
+    status_code=201,
 )
 async def create_dealer_price(
         dealer: DealerPriceCreate,
