@@ -14,7 +14,7 @@ router = APIRouter()
 @router.post(
     '/',
     response_model=list[ProductDB],
-    status_code=201
+    status_code=201,
 )
 async def plug(
         dealer_price_key: str,
