@@ -6,13 +6,14 @@ from app.schemas.user import UserCreate, UserRead, UserUpdate
 USER_DELETE_ERROR_MESSAGE = 'Удаление пользователей запрещено!'
 
 router = APIRouter()
+auth_router = APIRouter()
 
-router.include_router(
+auth_router.include_router(
     fastapi_users.get_auth_router(auth_backend),
     prefix='/auth/jwt',
     tags=['auth'],
 )
-router.include_router(
+auth_router.include_router(
     fastapi_users.get_register_router(UserRead, UserCreate),
     prefix='/auth',
     tags=['auth'],

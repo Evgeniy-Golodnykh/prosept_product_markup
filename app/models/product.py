@@ -1,4 +1,5 @@
 from sqlalchemy import Column, String
+from sqlalchemy.orm import relationship
 
 from app.core.db import LONG_LENGTH, SHORT_LENGTH, Base
 
@@ -17,3 +18,7 @@ class Product(Base):
     wb_article = Column(String(SHORT_LENGTH))
     ym_article = Column(String(SHORT_LENGTH))
     wb_article_td = Column(String(SHORT_LENGTH))
+
+    product_dealer_key = relationship(
+        'ProductDealerKey', back_populates='product'
+    )
