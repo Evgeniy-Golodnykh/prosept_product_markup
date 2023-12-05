@@ -24,7 +24,9 @@ class CRUDBase:
             self,
             session: AsyncSession
     ):
-        db_objects = await session.execute(select(self.model))
+        db_objects = await session.execute(
+            select(self.model).order_by(self.model.id)
+        )
         return db_objects.scalars().all()
 
     async def create(
