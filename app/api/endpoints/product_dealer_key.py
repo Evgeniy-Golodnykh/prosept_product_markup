@@ -10,6 +10,8 @@ from app.schemas.product_dealer_key import (
     ProducDealerKeyDB, ProductDealerKeyCreate,
 )
 
+NO_DATA = 'Нет данных'
+
 router = APIRouter()
 
 
@@ -38,11 +40,17 @@ async def create_markup(
     data = markup.dict()
     dealer = await dealer_crud.get(dealerprice.dealer_id, session)
     data['dealer_name'] = dealer.name
-    data['dealer_price_cost'] = dealerprice.price
-    data['dealer_price_url'] = dealerprice.product_url
+    data['dealer_price_cost'] = (
+        dealerprice.price if dealerprice.price else NO_DATA
+    )
+    data['dealer_price_url'] = (
+        dealerprice.product_url if dealerprice.product_url else NO_DATA
+    )
     data['dealer_price_name'] = dealerprice.product_name
-    data['product_article'] = product.article
+    data['product_article'] = product.article if product.article else NO_DATA
     data['product_name'] = product.name
-    data['product_cost'] = product.cost
-    data['product_category'] = product.category_id
+    data['product_cost'] = product.cost if product.cost else NO_DATA
+    data['product_category'] = (
+        product.category_id if product.category_id else NO_DATA
+    )
     return await product_dealer_key_crud.create(data, session)
