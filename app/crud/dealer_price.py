@@ -1,6 +1,6 @@
 from typing import Optional
 
-from sqlalchemy import select, or_
+from sqlalchemy import or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.crud.base import CRUDBase
@@ -21,7 +21,7 @@ class CRUDDealerPrice(CRUDBase):
         )
         return db_dealer_price.scalars().first()
 
-    async def get_dealer_prices_none_status(
+    async def get_dealer_prices_none_delay_status(
             self,
             session: AsyncSession,
     ) -> list[DealerPrice]:
@@ -29,7 +29,7 @@ class CRUDDealerPrice(CRUDBase):
             select(DealerPrice).where(or_(
                 DealerPrice.status == MarkupStatus.none,
                 DealerPrice.status == MarkupStatus.delay,
-            ))
+            )).order_by(DealerPrice.id)
         )
         return db_dealer_prices.scalars().all()
 
