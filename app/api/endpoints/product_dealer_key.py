@@ -1,7 +1,9 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.api.validators import check_dealer_price_exists, check_product_exists
+from app.api.validators import (
+    check_dealer_price_exists, check_markup_not_exists, check_product_exists,
+)
 from app.core.db import get_async_session
 from app.crud import product_dealer_key_crud
 from app.schemas.product_dealer_key import (
@@ -30,6 +32,15 @@ async def create_markup(
         markup: ProductDealerKeyCreate,
         session: AsyncSession = Depends(get_async_session),
 ):
-    await check_product_exists(markup.product_id, session)
-    await check_dealer_price_exists(markup.key_id, session)
-    return await product_dealer_key_crud.create(markup, session)
+    await check_markup_not_exists(markup.key_id, session)
+    product = await check_product_exists(markup.product_id, session)
+    dealer = await check_dealer_price_exists(markup.key_id, session)
+    data = markup.dict()
+    data['dealer_price_cost'] = dealer.price
+    data['dealer_price_url'] = dealer.product_url
+    data['dealer_price_name'] = dealer.product_name
+    data['product_article'] = product.article
+    data['product_name'] = product.name
+    data['product_cost'] = product.cost
+    data['product_category'] = product.category_id
+    return await product_dealer_key_crud.create(data, session)
