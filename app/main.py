@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.api.endpoints import auth_router
 from app.api.routers import main_router
 from app.core.config import settings
 from app.core.init_db import create_first_superuser
@@ -14,6 +15,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+app.include_router(auth_router)
 app.include_router(main_router, prefix='/api',)
 
 

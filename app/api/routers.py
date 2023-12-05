@@ -7,7 +7,6 @@ from app.api.endpoints import (
 from app.tools.download_csv import router as csv_download_router
 
 main_router = APIRouter()
-main_router.include_router(user_router)
 main_router.include_router(
     dealer_router,
     prefix='/dealer',
@@ -33,6 +32,7 @@ main_router.include_router(
     prefix='/recommendation',
     tags=['recommendation'],
 )
+main_router.include_router(user_router)
 main_router.include_router(
     csv_download_router,
     prefix='/download',
