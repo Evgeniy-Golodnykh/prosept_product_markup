@@ -15,6 +15,7 @@ class ProductDealerKey(Base):
     )
     product_id = Column(Integer, ForeignKey('product.id'))
     create_date = Column(DateTime, default=datetime.now)
+    dealer_name = Column(String)
     dealer_price_cost = Column(String)
     dealer_price_url = Column(String)
     dealer_price_name = Column(String)

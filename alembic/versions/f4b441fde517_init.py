@@ -1,8 +1,8 @@
 """init
 
-Revision ID: 65ab970de82b
+Revision ID: f4b441fde517
 Revises: 
-Create Date: 2023-12-06 01:14:24.920920
+Create Date: 2023-12-06 02:30:53.024604
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '65ab970de82b'
+revision = 'f4b441fde517'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -39,6 +39,13 @@ def upgrade():
     sa.Column('wb_article', sa.String(length=100), nullable=True),
     sa.Column('ym_article', sa.String(length=100), nullable=True),
     sa.Column('wb_article_td', sa.String(length=100), nullable=True),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('recommendation',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('product_key', sa.String(length=100), nullable=False),
+    sa.Column('product_id', sa.ARRAY(sa.Integer()), nullable=False),
+    sa.Column('pred_sim', sa.ARRAY(sa.Float()), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('user',
@@ -71,6 +78,7 @@ def upgrade():
     sa.Column('key_id', sa.String(), nullable=False),
     sa.Column('product_id', sa.Integer(), nullable=True),
     sa.Column('create_date', sa.DateTime(), nullable=True),
+    sa.Column('dealer_name', sa.String(), nullable=True),
     sa.Column('dealer_price_cost', sa.String(), nullable=True),
     sa.Column('dealer_price_url', sa.String(), nullable=True),
     sa.Column('dealer_price_name', sa.String(), nullable=True),
@@ -92,6 +100,7 @@ def downgrade():
     op.drop_table('dealerprice')
     op.drop_index(op.f('ix_user_email'), table_name='user')
     op.drop_table('user')
+    op.drop_table('recommendation')
     op.drop_table('product')
     op.drop_table('dealer')
     # ### end Alembic commands ###
