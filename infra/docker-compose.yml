@@ -11,7 +11,7 @@ services:
       - ./.env
 
   backend:
-    image: evgenferrum/prosept_product_markup:latest
+    image: evgenferrum/prosept_backend:latest
     environment:
         - TZ=Europe/Moscow
     restart: always
@@ -23,6 +23,16 @@ services:
      - db
     env_file:
       - ./.env
+  
+  frontend:
+    image: evgenferrum/prosept_frontend:latest
+    environment:
+        - TZ=Europe/Moscow
+    restart: always
+    volumes:
+      - ../frontend/:/app/result_build/
+    depends_on:
+      - backend
 
   nginx:
     image: nginx:1.21.3
@@ -36,7 +46,7 @@ services:
       - static_value:/var/html/static/
       - media_value:/var/html/media/
     depends_on:
-      - backend
+      - frontend
 
 volumes:
   static_value:

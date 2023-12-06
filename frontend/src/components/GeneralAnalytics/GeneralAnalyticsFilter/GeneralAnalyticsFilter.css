@@ -1,0 +1,23 @@
+.general-analytics-filter {
+  margin: 20px 0;
+  display: flex;
+  width: 100%;
+}
+
+.general-analytics-filter__input {
+  min-height: 38px;
+  padding: 6px 36px;
+  flex: 1 0 auto;
+  background-color: #f2f2f2;
+  background-image: url('../../../images/dealer-search-icon.svg');
+  background-repeat: no-repeat;
+  background-position: -30px 10px;
+  background-size: 100px;
+  border: 0px solid #d5dadc;
+  border-radius: 12px;
+  box-sizing: border-box;
+  outline: none;
+  color: #555;
+  font-size: 14px;
+  line-height: 1.4;
+}

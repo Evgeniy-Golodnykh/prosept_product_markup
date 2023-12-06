@@ -25,12 +25,13 @@ python3 -m pip install -r requirements.txt
 ```bash
 APP_TITLE=Prosept product markup
 APP_DESCRIPTION=Сервис для автоматизации сопоставления товаров
-DATABASE_URL=sqlite+aiosqlite:///./product_markup.db
 SECRET=top_secret
 FIRST_SUPERUSER_EMAIL=admin@gmail.com
 FIRST_SUPERUSER_PASSWORD=secret_password
 FIRST_SUPERUSER_FIRST_NAME=some_name
 FIRST_SUPERUSER_LAST_NAME=some_lastname
+MATCHING_COUNT=5
+DATABASE_URL=postgresql+asyncpg://postgres:postgres@db:5432/prosept
 ```
 6. To create database use command
 ```bash

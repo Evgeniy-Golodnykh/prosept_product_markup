@@ -1,0 +1,19 @@
+.header {
+  width: 100%;
+  background-color: #f2f2f2;
+}
+
+.header__container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 15px 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.header__link {
+  font-size: 0;
+  text-decoration: none;
+}
