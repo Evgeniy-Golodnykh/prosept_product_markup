@@ -8,6 +8,7 @@ class Settings(BaseSettings):
     app_description: str = 'Сервис для автоматизации сопоставления товаров'
     database_url: str = 'sqlite+aiosqlite:///./product_markup.db'
     secret: str = 'top_secret'
+    matching_count: int = 5
     first_superuser_email: Optional[EmailStr] = None
     first_superuser_password: Optional[str] = None
     first_superuser_first_name: Optional[str] = None

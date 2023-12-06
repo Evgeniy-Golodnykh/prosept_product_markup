@@ -3,13 +3,17 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.crud import (
     dealer_crud, dealer_price_crud, product_crud, product_dealer_key_crud,
+    recommendation_crud
 )
-from app.models import DealerPrice, Product
+from app.models import DealerPrice, Product, Recommendation
 
 DEALER_EXISTS_ERROR = 'Дилер с таким именем уже существует!'
 MARKUP_EXISTS_ERROR = 'Разметка с ключом №{key} уже существует!'
 DEALER_PRICE_NOT_EXISTS_ERROR = 'Товар маркетплейса с ключом №{key} не найден'
 PRODUCT_NOT_EXISTS_ERROR = 'Товар заказчика с id №{id} не найден'
+RECOMMENDATION_NOT_EXISTS_ERROR = (
+    'Рекомендации для товара с ключом №{key} не найдены'
+)
 
 
 async def check_dealer_name_duplicate(
@@ -50,6 +54,21 @@ async def check_product_exists(
             detail=PRODUCT_NOT_EXISTS_ERROR.format(id=product_id)
         )
     return product
+
+
+async def check_recommendation_exists(
+        key: str,
+        session: AsyncSession,
+) -> Recommendation:
+    recommendation = await recommendation_crud.get_recommendation_by_key(
+        key, session
+    )
+    if recommendation is None:
+        raise HTTPException(
+            status_code=404,
+            detail=RECOMMENDATION_NOT_EXISTS_ERROR.format(key=key)
+        )
+    return recommendation
 
 
 async def check_markup_not_exists(
