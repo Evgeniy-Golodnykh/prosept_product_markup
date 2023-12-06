@@ -1,20 +1,18 @@
 import asyncio
 from http import HTTPStatus
 
-from fastapi.testclient import TestClient
-from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
-from sqlalchemy.orm import sessionmaker
-
+from app.core.config import settings
 from app.core.db import Base, get_async_session
 from app.main import app
 from app.schemas.dealer import DealerCreate
 from app.schemas.dealer_price import DealerPriceCreate
 from app.schemas.product import ProductCreate
 from app.schemas.product_dealer_key import ProductDealerKeyCreate
+from fastapi.testclient import TestClient
+from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
+from sqlalchemy.orm import sessionmaker
 
-DATABASE_URL = 'sqlite+aiosqlite:///./test.db'
-
-engine = create_async_engine(DATABASE_URL)
+engine = create_async_engine(settings.database_url)
 
 
 async def init_models():
