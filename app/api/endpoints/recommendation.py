@@ -3,7 +3,9 @@ import random
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.api.validators import check_dealer_price_exists
+from app.api.validators import (
+    check_dealer_price_exists, check_recommendation_exists
+)
 from app.core.db import get_async_session
 from app.crud import product_crud, recommendation_crud
 from app.schemas.product import ProductDB
@@ -42,12 +44,15 @@ async def create_recommendations(
     response_model=list[ProductDB],
     status_code=201,
 )
-async def plug(
+async def get_recommendation(
         dealer_price_key: str,
         session: AsyncSession = Depends(get_async_session),
 ):
     await check_dealer_price_exists(dealer_price_key, session)
+    recommendation = await check_recommendation_exists(
+        dealer_price_key, session
+    )
     return [
         await product_crud.get(i, session) for i
-        in [random.randint(1, 488) for i in range(5)]
+        in recommendation.product_id
     ]
