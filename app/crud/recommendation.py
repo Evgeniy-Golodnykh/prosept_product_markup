@@ -17,7 +17,7 @@ class CRUDRecommendation(CRUDBase):
         db_recommendation = await session.execute(
             select(Recommendation).where(
                 Recommendation.product_key == key
-            ).order_by(desk(Recommendation.id))
+            ).order_by(desc(Recommendation.id))
         )
         return db_recommendation.scalars().first()
 
