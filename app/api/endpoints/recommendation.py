@@ -4,6 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.api.validators import (
     check_dealer_price_exists, check_recommendation_exists,
 )
+from app.core.config import settings
 from app.core.db import get_async_session
 from app.crud import product_crud, recommendation_crud
 from app.schemas.product import ProductDB
@@ -51,6 +52,6 @@ async def get_some_recommendations(
         dealer_price_key, session
     )
     return [
-        await product_crud.get(recommendation, session)
-        for recommendation in recommendations.product_id
+        await product_crud.get(recommendation, session) for recommendation
+        in recommendations.product_id[:settings.matching_count]
     ]

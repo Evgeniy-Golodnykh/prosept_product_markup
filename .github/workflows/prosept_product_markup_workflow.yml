@@ -82,6 +82,7 @@ jobs:
             echo FIRST_SUPERUSER_PASSWORD=${{ secrets.FIRST_SUPERUSER_PASSWORD }} >> .env
             echo FIRST_SUPERUSER_FIRST_NAME=${{ secrets.FIRST_SUPERUSER_FIRST_NAME }} >> .env
             echo FIRST_SUPERUSER_LAST_NAME${{ secrets.FIRST_SUPERUSER_LAST_NAME }} >> .env
+            echo MATCHING_COUNT=${{ secrets.MATCHING_COUNT }} >> .env
             sudo docker-compose pull
             sudo docker-compose up -d
 
