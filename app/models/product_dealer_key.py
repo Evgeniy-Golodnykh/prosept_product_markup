@@ -22,7 +22,7 @@ class ProductDealerKey(Base):
     product_article = Column(String)
     product_name = Column(String)
     product_cost = Column(String)
-    product_category = Column(Integer)
+    product_category = Column(String)
 
     dealer_price = relationship(
         'DealerPrice', back_populates='product_dealer_key'
