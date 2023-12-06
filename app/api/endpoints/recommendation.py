@@ -9,6 +9,8 @@ from app.crud import product_crud, recommendation_crud
 from app.schemas.product import ProductDB
 from app.schemas.recommendation import RecommendationCreate, RecommendationDB
 
+FINISHED_MESSAGE = 'ML data has been successfully uploaded to the database'
+
 router = APIRouter()
 
 
@@ -24,14 +26,15 @@ async def get_all_recommendations(
 
 @router.post(
     '/',
-    response_model=list[RecommendationDB],
+    response_model=dict,
     status_code=201,
 )
 async def create_recommendations(
         recommendations: list[RecommendationCreate],
         session: AsyncSession = Depends(get_async_session),
 ):
-    return await recommendation_crud.create_multi(recommendations, session)
+    await recommendation_crud.create_multi(recommendations, session)
+    return {'Result': FINISHED_MESSAGE}
 
 
 @router.post(
