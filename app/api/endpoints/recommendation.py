@@ -7,14 +7,14 @@ from app.api.validators import check_dealer_price_exists
 from app.core.db import get_async_session
 from app.crud import product_crud, recommendation_crud
 from app.schemas.product import ProductDB
-from app.schemas.recommendation import RecommendationCreate
+from app.schemas.recommendation import RecommendationCreate, RecommendationDB
 
 router = APIRouter()
 
 
 @router.post(
     '/',
-    response_model=RecommendationCreate,
+    response_model=RecommendationDB,
     status_code=201,
 )
 async def create_recommendation(
