@@ -1,6 +1,7 @@
 import pandas as pd
-from sklearn.feature_extraction.text import TfidfVectorizer
 from Prosept_func import Prosept_func
+from sklearn.feature_extraction.text import TfidfVectorizer
+
 
 def main():
 
@@ -8,10 +9,10 @@ def main():
 
     prosept = Prosept_func()
 
-    url_dealerprice = '127.0.0.1:8000/api/dealerprice/'
+    url_dealerprice = '0.0.0.0:8000/api/dealerprice/'
     df_dealerprice = prosept.preprocess_dealerprice(url_dealerprice)
 
-    url_product = '127.0.0.1:8000/api/product/'
+    url_product = '0.0.0.0:8000/api/product/'
     df_product = prosept.preprocess_product(url_product)
 
     path_to_dir = 'data/'
@@ -30,7 +31,7 @@ def main():
 
     df_result, json_result = prosept.result_to_df_json(pred_id_key, pred_sim, df_dealerprice)
 
-    prosept.save_json('127.0.0.1:8000/api/recommendation/', json_result)
+    prosept.save_json('0.0.0.0:8000/api/recommendation/', json_result)
 
     df_metric = df_result.merge(df_productdealerkey[['key', 'product_id']], left_on='product_key', right_on='key')
     print(prosept.metric(df_metric.product_id_y, df_metric.product_id_x, 5))
