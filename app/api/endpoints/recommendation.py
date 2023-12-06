@@ -14,14 +14,14 @@ router = APIRouter()
 
 @router.post(
     '/',
-    response_model=RecommendationDB,
+    response_model=list[RecommendationDB],
     status_code=201,
 )
-async def create_recommendation(
-        recommendation: RecommendationCreate,
+async def create_recommendations(
+        recommendations: list[RecommendationCreate],
         session: AsyncSession = Depends(get_async_session),
 ):
-    return await recommendation_crud.create(recommendation, session)
+    return await recommendation_crud.create_multi(recommendations, session)
 
 
 @router.post(
