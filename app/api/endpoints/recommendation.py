@@ -12,6 +12,16 @@ from app.schemas.recommendation import RecommendationCreate, RecommendationDB
 router = APIRouter()
 
 
+@router.get(
+    '/',
+    response_model=list[RecommendationDB],
+)
+async def get_all_recommendations(
+        session: AsyncSession = Depends(get_async_session),
+):
+    return await recommendation_crud.get_multi(session)
+
+
 @router.post(
     '/',
     response_model=list[RecommendationDB],
