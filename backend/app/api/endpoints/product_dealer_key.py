@@ -53,4 +53,4 @@ async def create_markup(
     data['product_category'] = (
         product.category_id if product.category_id else NO_DATA
     )
-    return await product_dealer_key_crud.create(data, session)
+    await product_dealer_key_crud.create(data, session)
