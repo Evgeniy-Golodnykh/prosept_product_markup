@@ -1,7 +1,9 @@
 # Prosept Product Markup
 
 ### Information for the reviewer
-Use only PostgreSQL, some models has type ARRAY.
+```diff
+- Use only PostgreSQL, some models has type ARRAY.
+```
 
 ### Description
 Manufacturer and marketplace product matching [app](http://prosept.sytes.net)
