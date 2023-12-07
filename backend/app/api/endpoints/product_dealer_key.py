@@ -2,8 +2,8 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.api.validators import (
-    check_dealer_price_exists, check_markup_exists,
-    check_markup_not_exists, check_product_exists,
+    check_dealer_price_exists, check_markup_exists, check_markup_not_exists,
+    check_product_exists,
 )
 from app.core.db import get_async_session
 from app.crud import dealer_crud, product_dealer_key_crud
@@ -67,4 +67,4 @@ async def delete_markup(
         session: AsyncSession = Depends(get_async_session),
 ):
     markup = await check_markup_exists(dealer_price_key, session)
-    return await product_dealer_key_crud.remove(markup, session)
+    await product_dealer_key_crud.remove(markup, session)
