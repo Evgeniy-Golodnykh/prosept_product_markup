@@ -5,10 +5,11 @@ from app.crud import (
     dealer_crud, dealer_price_crud, product_crud, product_dealer_key_crud,
     recommendation_crud
 )
-from app.models import DealerPrice, Product, Recommendation
+from app.models import DealerPrice, Product, ProductDealerKey, Recommendation
 
 DEALER_EXISTS_ERROR = 'Дилер с таким именем уже существует!'
 MARKUP_EXISTS_ERROR = 'Разметка с ключом №{key} уже существует!'
+MARKUP_NOT_EXISTS_ERROR = 'Разметка с ключом №{key} не найдена'
 DEALER_PRICE_NOT_EXISTS_ERROR = 'Товар маркетплейса с ключом №{key} не найден'
 PRODUCT_NOT_EXISTS_ERROR = 'Товар заказчика с id №{id} не найден'
 RECOMMENDATION_NOT_EXISTS_ERROR = (
@@ -69,6 +70,19 @@ async def check_recommendation_exists(
             detail=RECOMMENDATION_NOT_EXISTS_ERROR.format(key=key)
         )
     return recommendation
+
+
+async def check_markup_exists(
+        key: str,
+        session: AsyncSession,
+) -> ProductDealerKey:
+    markup = await product_dealer_key_crud.get_markup_by_key(key, session)
+    if markup is None:
+        raise HTTPException(
+            status_code=404,
+            detail=MARKUP_NOT_EXISTS_ERROR.format(key=key)
+        )
+    return markup
 
 
 async def check_markup_not_exists(
