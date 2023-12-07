@@ -1,3 +1,7 @@
+.manufacturer-product-form {
+  margin: 78px 0 0 0;
+}
+
 .manufacturer-table {
   width: 100%;
   border-collapse: collapse;
@@ -21,6 +25,7 @@ table tr:hover {
 }
 
 .manufacturer-table__header-cell {
+  min-width: 100px;
   padding: 12px;
   text-align: center;
   background-color: rgb(56, 164, 58);
@@ -66,6 +71,7 @@ table tr:hover {
   display: flex;
   margin: 20px 0 0;
   gap: 10px;
+  justify-content: center;
 }
 
 .manufacturer-button {
@@ -94,8 +100,20 @@ table tr:hover {
   border: 2px solid #aab1b4;
 }
 
-@media screen and (max-width: 1300px) {
-  .manufacturer-buttons {
-    justify-content: center;
+.manufacturer-table__popup-msg {
+  margin: 50px 0 0;
+  color: rgb(56, 164, 58);
+  font-size: 24px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.error-msg {
+  color: #222;
+}
+
+@media screen and (max-width: 1500px) {
+  .manufacturer-table__header-cell {
+    min-width: 80px;
   }
 }

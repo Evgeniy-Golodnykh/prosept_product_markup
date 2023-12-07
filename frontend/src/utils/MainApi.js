@@ -1,6 +1,6 @@
 class MainApi {
   constructor() {
-    this._url = 'http://prosept.sytes.net';
+    this._url = 'http://localhost:8000';
     this._headers = {
       'Content-Type': 'application/json'
     }
@@ -29,7 +29,6 @@ class MainApi {
   }
 
   getPendingDealersProducts() {
-    console.log('compare');
     return fetch(`${this._url}/api/dealerprice/none_delay_status`, {
       headers: this._headers,
     })
@@ -55,34 +54,33 @@ class MainApi {
       .then(res => this._checkResponse(res))
   };
 
-
-  comparePosition(productKey, productId) {
+  comparePosition(productKey, productId, matchingPos) {
     return fetch(`${this._url}/api/productdealerkey/`, {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify({
         "key_id": productKey,
-        "product_id": productId
+        "product_id": productId,
+        "matching_position": matchingPos,
       })
     })
       .then(res => this._checkResponse(res))
   };
 
-  notComparePosition(product) {
-    console.log('notCompare');
-    // return fetch(`${this._url}/users/me`, {
-    //   credentials: 'include',
-    // })
-    //   .then(res => this._checkResponse(res))
+  getMatchedProducts() {
+    return fetch(`${this._url}/api/productdealerkey/`, {
+      headers: this._headers,
+    })
+      .then(res => this._checkResponse(res))
   };
 
-  postponePosition(product) {
-    console.log('postponePosition');
-    // return fetch(`${this._url}/users/me`, {
-    //   credentials: 'include',
-    // })
-    //   .then(res => this._checkResponse(res))
-  };
+  deleteMatchedProducts(dealerPriceKey) {
+    return fetch(`${this._url}/api/productdealerkey/${dealerPriceKey}`, {
+      method: 'DELETE',
+      headers: this._headers,
+    })
+      .then(res => this._checkResponse(res))
+  }
 
 }
 

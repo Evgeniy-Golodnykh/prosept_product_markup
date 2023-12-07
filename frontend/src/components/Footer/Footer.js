@@ -2,11 +2,13 @@ import React from 'react';
 
 import './Footer.css';
 
+import { copyrightProsept } from '../../utils/constants';
+
 function Footer() {
 
   return (
     <footer className='footer'>
-      <p className='footer__copyright'>© 2002–2023, PROSEPT</p>
+      <p className='footer__copyright'>{copyrightProsept}</p>
     </footer>
   )
 };

@@ -3,33 +3,42 @@ import { useTable, useSortBy, usePagination } from 'react-table';
 
 import './ManufacturerProductForm.css';
 
+import {
+  selectProduct,
+  article,
+  nameOfProduct,
+  price,
+} from '../../../utils/constants';
+
 import ManufacturerRadioButton from '../ManufacturerRadioButton/ManufacturerRadioButton';
 
 const COLUMNS = [
   {
-    Header: 'Выберите товар',
+    Header: selectProduct,
     Cell: (props) => {
       return (
         <ManufacturerRadioButton
           rowId={props.row.original.id}
+          rowIndex={props.row.index}
           getRadioValue={props.getRadioValue}
           setRadioButtonIsSelected={props.setRadioButtonIsSelected}
           radioButtonIsSelected={props.radioButtonIsSelected}
+          getMatchingPos={props.getMatchingPos}
         />
       )
     },
     disableSortBy: true,
   },
   {
-    Header: 'Артикул',
+    Header: article,
     accessor: 'article',
   },
   {
-    Header: 'Наименование товара',
+    Header: nameOfProduct,
     accessor: 'name',
   },
   {
-    Header: 'Цена',
+    Header: price,
     accessor: 'cost',
   },
 ]
@@ -37,8 +46,8 @@ const COLUMNS = [
 function ManufacturerProductForm(props) {
 
   const [value, setValue] = useState(null);
-
   const [radioButtonIsSelected, setRadioButtonIsSelected] = useState(null);
+  const [matchingPos, setMatchingPos] = useState(null);
 
   useEffect(() => {
     setRadioButtonIsSelected(null)
@@ -63,10 +72,14 @@ function ManufacturerProductForm(props) {
     setValue(value)
   }
 
+  function getMatchingPos(matchingPos) {
+    setMatchingPos(matchingPos);
+  }
+
   function handleSubmit(event) {
     getRadioValue()
     event.preventDefault()
-    props.onComparePosition(value)
+    props.onComparePosition(value, matchingPos)
   }
 
   function handleNotComparePosition() {
@@ -109,7 +122,12 @@ function ManufacturerProductForm(props) {
                 {
                   row.cells.map((cell) => {
                     return <td className='manufacturer-table__cell' {...cell.getCellProps()}>
-                      {cell.render('Cell', { getRadioValue: getRadioValue, setRadioButtonIsSelected: setRadioButtonIsSelected, radioButtonIsSelected: radioButtonIsSelected })}
+                      {cell.render('Cell', {
+                        getRadioValue: getRadioValue,
+                        setRadioButtonIsSelected: setRadioButtonIsSelected,
+                        radioButtonIsSelected: radioButtonIsSelected,
+                        getMatchingPos: getMatchingPos,
+                      })}
                     </td>
                   })
                 }
@@ -134,15 +152,17 @@ function ManufacturerProductForm(props) {
               Нет
             </button>
             <button
-              className='manufacturer-button manufacturer-button_enabled'
+              className={`manufacturer-button ${props.isPostponed === 'Отложено' ? 'manufacturer-button_disabled' : 'manufacturer-button_enabled'}`}
               type='button'
-              onClick={handlePostponePosition}>
+              onClick={handlePostponePosition}
+              disabled={props.isPostponed === 'Отложено'}>
               Отложить
             </button>
           </div>
         )
       }
-
+      <p className='manufacturer-table__popup-msg'>{props.popup && `${props.popup}`}</p>
+      <p className='manufacturer-table__popup-msg error-msg'>{props.error && `${props.error}`}</p>
     </form>
   )
 };

@@ -1,9 +1,27 @@
+import { useEffect } from 'react';
+
 import './DealerRadioButton.css';
 
 function DealerRadioButton(props) {
 
+  useEffect(() => {
+    // Сбрасываем атрибут checked всех радиокнопок при каждом перерендере компонента
+    const resetRadioButtons = () => {
+      const radioButtons = document.querySelectorAll('input[type="radio"]');
+      radioButtons.forEach((radioButton) => {
+        radioButton.checked = false;
+      });
+    };
+    resetRadioButtons();
+    // Возвращаем функцию обратного вызова для выполнения при размонтировании компонента
+    return () => {
+      resetRadioButtons();
+    };
+  }, [props.pendingDealersProducts]);
+
   function handleChange() {
     props.getRecomendationToDealerProduct(props.rowId)
+    props.setIsPostponed(props.rowStatus)
   }
 
   return (

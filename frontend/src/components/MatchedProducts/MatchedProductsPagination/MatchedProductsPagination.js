@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import useOutsideClick from '../../../hooks/useOutsideClick';
 
-import './DealerPagination.css';
+import './MatchedProductsPagination.css';
 
 import {
   minNumbOfPages,
@@ -9,7 +9,7 @@ import {
   maxNumbOfPages,
 } from '../../../utils/constants';
 
-function DealerPagination({
+function MatchedProductsPagination({
   pageIndex,
   pageOptions,
   gotoPage,
@@ -21,9 +21,10 @@ function DealerPagination({
   canNextPage,
   pageCount }) {
 
+  const dropdownMenuRef = useRef(null);
+
   const [value, setValue] = useState(pageIndex + 1)
   const [selectMenuIsOpen, setSelectMenuIsOpen] = useState(false);
-  const dropdownMenuRef = useRef(null);
 
   function handleClickDecrement() {
     if (pageIndex > 0) {
@@ -54,7 +55,7 @@ function DealerPagination({
   }
 
   function handleSelectOption(e) {
-    if (e.target.classList.contains('dealer-pagination__dropdown-item')) {
+    if (e.target.classList.contains('matched-products-pagination__dropdown-item')) {
       setPageSize(e.target.value);
       setSelectMenuIsOpen(!selectMenuIsOpen)
     }
@@ -63,46 +64,46 @@ function DealerPagination({
   useOutsideClick(dropdownMenuRef, handleCloseSelectMenu, selectMenuIsOpen)
 
   return (
-    <div className='dealer-pagination'>
-      <div className='deler-pagination__dropdown'>
-        <div ref={dropdownMenuRef} className='deler-pagination__select' onClick={handleToggleSelectMenu}>
-          <span className='deler-pagination__selected'>{pageSize} позиций</span>
-          <div className={`deler-pagination__caret`}></div>
+    <div className='matched-products-pagination'>
+      <div className='matched-products-pagination__dropdown'>
+        <div ref={dropdownMenuRef} className='matched-products-pagination__select' onClick={handleToggleSelectMenu}>
+          <span className='matched-products-pagination__selected'>{pageSize} позиций</span>
+          <div className={`matched-products-pagination__caret`}></div>
         </div>
         <ul
-          className={`dealer-pagination__dropdown-menu ${selectMenuIsOpen && 'dealer-pagination__dropdown-menu_open'}`}
+          className={`matched-products-pagination__dropdown-menu ${selectMenuIsOpen && 'matched-products-pagination__dropdown-menu_open'}`}
           onClick={handleSelectOption}>
-          <li className='dealer-pagination__dropdown-item' value={minNumbOfPages}>{minNumbOfPages} позиций</li>
-          <li className='dealer-pagination__dropdown-item' value={middleNumbOfPages}>{middleNumbOfPages} позиций</li>
-          <li className='dealer-pagination__dropdown-item' value={maxNumbOfPages}>{maxNumbOfPages} позиций</li>
+          <li className='matched-products-pagination__dropdown-item' value={minNumbOfPages}>{minNumbOfPages} позиций</li>
+          <li className='matched-products-pagination__dropdown-item' value={middleNumbOfPages}>{middleNumbOfPages} позиций</li>
+          <li className='matched-products-pagination__dropdown-item' value={maxNumbOfPages}>{maxNumbOfPages} позиций</li>
         </ul>
       </div>
-      <div className='dealer-pagination__container'>
-        <button className='dealer-pagination__button' disabled={!canPreviousPage}
+      <div className='matched-products-pagination__container'>
+        <button className='matched-products-pagination__button' disabled={!canPreviousPage}
           onClick={() => {
             gotoPage(0);
             setValue(1);
           }}>
           {'<<'}
         </button>
-        <button className='dealer-pagination__button' disabled={!canPreviousPage}
+        <button className='matched-products-pagination__button' disabled={!canPreviousPage}
           onClick={() => {
             previousPage();
             setValue(pageIndex);
           }}>
           Назад
         </button>
-        <p className='dealer-pagination__page-number'>
+        <p className='matched-products-pagination__page-number'>
           {pageIndex + 1} из {pageOptions.length}
         </p>
-        <button className='dealer-pagination__button' disabled={!canNextPage}
+        <button className='matched-products-pagination__button' disabled={!canNextPage}
           onClick={() => {
             nextPage();
             setValue(pageIndex + 2);
           }}>
           Вперед
         </button>
-        <button className='dealer-pagination__button' disabled={!canNextPage}
+        <button className='matched-products-pagination__button' disabled={!canNextPage}
           onClick={() => {
             gotoPage(pageCount - 1)
             setValue(pageCount);
@@ -110,19 +111,19 @@ function DealerPagination({
           {'>>'}
         </button>
       </div>
-      <div className='dealer-pagination__number'>
-        <button className='dealer-pagination__decrement' onClick={handleClickDecrement}> - </button>
-        <input type='number' className='dealer-pagination__number-input'
+      <div className='matched-products-pagination__number'>
+        <button className='matched-products-pagination__decrement' onClick={handleClickDecrement}> - </button>
+        <input type='number' className='matched-products-pagination__number-input'
           value={value || ''}
           min='0'
           step='1'
           onChange={e => {
             handleChangeInput(e);
           }} />
-        <button className='dealer-pagination__increment' onClick={handleClickIncrement}> + </button>
+        <button className='matched-products-pagination__increment' onClick={handleClickIncrement}> + </button>
       </div>
     </div>
   )
 };
 
-export default DealerPagination;
+export default MatchedProductsPagination;

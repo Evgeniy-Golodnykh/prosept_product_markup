@@ -2,6 +2,7 @@
   padding: 50px;
   flex: 1;
   box-sizing: border-box;
+  word-wrap: break-word;
 }
 
 .general-analytics__title {
@@ -19,8 +20,16 @@
   grid-template-columns: 1fr 2fr;
 }
 
-@media screen and (max-width: 1300px) {
+@media screen and (max-width: 1600px) {
+  .general-analytics {
+    padding: 50px 30px;
+  }
+}
+
+@media screen and (max-width: 1428px) {
   .general-analytics__container {
     grid-template-columns: 1fr;
   }
 }
+
+

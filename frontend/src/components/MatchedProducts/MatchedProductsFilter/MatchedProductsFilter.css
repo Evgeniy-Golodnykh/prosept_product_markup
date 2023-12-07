@@ -1,15 +1,35 @@
-.general-analytics-dropdown-menu {
-  width: 200px;
+.matched-products-filter-input {
+  width: 100%;
+  max-width: 250px;
+  min-width: 80px;
+  padding: 6px 12px 6px 36px;
+  background-color: #f2f2f2;
+  background-image: url('../../../images/dealer-search-icon.svg');
+  background-repeat: no-repeat;
+  background-position: -31px 7px;
+  background-size: 100px;
+  border: 0px;
+  border-radius: 12px;
+  box-sizing: border-box;
+  outline: none;
+  color: #555;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.matched-products-dropdown-menu {
+  width: 100%;
+  min-width: 160px;
   position: relative;
   margin: 10px auto 0 auto;
 }
 
-.general-analytics-dropdown-menu * {
+.matched-products-dropdown-menu * {
   box-sizing: border-box;
   user-select: none;
 }
 
-.general-analytics-dropdown-menu__select {
+.matched-products-dropdown-menu__select {
   background-color: #f2f2f2;
   color: #333;
   display: flex;
@@ -21,7 +41,7 @@
   transition: opacity 0.3s;
 }
 
-.general-analytics-dropdown-menu__caret {
+.matched-products-dropdown-menu__caret {
   width: 0;
   height: 0;
   margin: 0 0 0 15px;
@@ -30,11 +50,11 @@
   border-top: 6px solid #222;
 }
 
-.general-analytics-dropdown-menu__caret_transform {
+.matched-products-dropdown-menu__caret_transform {
   transform: rotate(180deg);
 }
 
-.general-analytics-dropdown-menu__list {
+.matched-products-dropdown-menu__list {
   width: 100%;
   max-height: 180px;
   padding: 5px;
@@ -53,30 +73,30 @@
   overflow-x: hidden;
 }
 
-.general-analytics-dropdown-menu__list::-webkit-scrollbar {
+.matched-products-dropdown-menu__list::-webkit-scrollbar {
   width: 10px;
   background-color: #f2f2f2;
   border-radius: 12px;
 }
 
-.general-analytics-dropdown-menu__list::-webkit-scrollbar-thumb {
+.matched-products-dropdown-menu__list::-webkit-scrollbar-thumb {
   background: rgb(56, 164, 58);
   border-radius: 12px;
 }
 
-.general-analytics-dropdown-menu__list_open {
+.matched-products-dropdown-menu__list_open {
   display: block;
   opacity: 1;
 }
 
-.general-analytics-dropdown-menu__item {
+.matched-products-dropdown-menu__item {
   padding: 0.7em 0.5em;
   margin: 0.3em;
   border-radius: 0.5em;
   cursor: pointer;
 }
 
-.general-analytics-dropdown-menu__item:hover {
+.matched-products-dropdown-menu__item:hover {
   background-color: #fff;
 }
 

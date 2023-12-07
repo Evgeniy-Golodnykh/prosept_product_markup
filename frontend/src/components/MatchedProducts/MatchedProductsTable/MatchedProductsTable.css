@@ -1,9 +1,4 @@
-.general-analytics-table__wrapper {
-  border: 3px solid #f2f2f2;
-  padding: 20px;
-}
-
-.general-analytics-table__title {
+.matched-products-table__title {
   margin: 0;
   text-align: center;
   font-size: 24px;
@@ -13,7 +8,7 @@
   border-bottom: 1px solid #e5e5e5;
 }
 
-.general-analytics-table {
+.matched-products-table {
   margin: 20px 0 0 0;
   width: 100%;
   border-collapse: collapse;
@@ -21,13 +16,13 @@
   font-size: 14px;
 }
 
-.general-analytics-table__cell, .general-analytics-table__header-cell {
+.matched-products-table__cell, .matched-products-table__header-cell {
   border: 1px solid #f2f2f2;
   padding: 8px;
-  max-width: 150px;
+  max-width: 200px;
 }
 
-.general-analytics-table__cell {
+.matched-products-table__cell {
   line-height: 20px;
 }
 
@@ -35,7 +30,7 @@ table tr:hover {
   background-color: #f2f2f2;
 }
 
-.general-analytics-table__header-cell {
+.matched-products-table__header-cell {
   padding: 12px;
   text-align: center;
   background-color: rgb(56, 164, 58);
@@ -43,42 +38,42 @@ table tr:hover {
   user-select: none;
 }
 
-.general-analytics-table__container {
+.matched-products-table__container {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 75px;
+  min-height: 95px;
 }
 
-.general-analytics-table__sort-header {
+.matched-products-table__sort-header {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.general-analytics-table__sort-title {
+.matched-products-table__sort-title {
   margin: 0;
 }
 
-.general-analytics-table__sort-title:hover {
+.matched-products-table__sort-title:hover {
   opacity: 0.7;
 }
 
-.general-analytics-table__sorted-icon {
+.matched-products-table__sorted-icon {
   margin: 0 0 0 5px;
 }
 
-.general-analytics-table__product-link {
+.matched-products-table__product-link {
   text-decoration: none;
   color: #333;
 }
 
-.general-analytics-table__product-link:hover {
+.matched-products-table__product-link:hover {
   color: rgb(56, 164, 58);
 }
 
 @media screen and (max-width: 1300px) {
-  .general-analytics-table__wrapper {
+  .matched-products-table__wrapper {
     padding: 40px;
   }
 }

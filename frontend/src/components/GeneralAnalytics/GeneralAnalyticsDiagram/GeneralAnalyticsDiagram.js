@@ -3,11 +3,14 @@ import Chart from 'react-apexcharts'
 
 import './GeneralAnalyticsDiagram.css';
 
-function GeneralAnalyticsDiagram({ dealersProducts, selectedDealer }) {
+import Preloader from '../../Preloader/Preloader';
+
+function GeneralAnalyticsDiagram({ dealersProducts, selectedDealer, isLoadingGeneralAnalytics }) {
 
   const [valueYes, setValueYes] = useState('')
   const [valueNo, setValueNo] = useState('')
   const [valueNotReviewed, setValueNotReviewed] = useState('')
+  const [valuePostponed, setValuePostponed] = useState('');
 
   function getStatusValues(arr) {
     const valueYes = arr.filter((obj) => obj.status === 'Да').length;
@@ -16,6 +19,8 @@ function GeneralAnalyticsDiagram({ dealersProducts, selectedDealer }) {
     setValueNo(valueNo)
     const valueNotReviewed = arr.filter((obj) => obj.status === 'Не рассмотрен').length;
     setValueNotReviewed(valueNotReviewed)
+    const valuePostponed = arr.filter((obj) => obj.status === 'Отложено').length;
+    setValuePostponed(valuePostponed)
   }
 
   useEffect(() => {
@@ -27,41 +32,43 @@ function GeneralAnalyticsDiagram({ dealersProducts, selectedDealer }) {
     }
   }, [selectedDealer, dealersProducts])
 
-
   return (
     <div className="general-analytics-diagram">
-      <h2 className='general-analytics-diagram___title'>Аналитика</h2>
-      <div className='general-analytics-diagram__container'>
-        <Chart
-          options={
-            {
-              labels: ['Да', 'Нет', 'Не рассмотрен'],
-              legend: {
-                position: 'bottom',
-                fontSize: '14px'
-              },
-              plotOptions: {
-                pie: {
-                  donut: {
-                    labels: {
-                      show: true,
-                      total: {
+      <h2 className='general-analytics-diagram___title'>Аналитика по дилерам</h2>
+      {isLoadingGeneralAnalytics
+        ? <Preloader />
+        : <div className='general-analytics-diagram__container'>
+          <Chart
+            options={
+              {
+                labels: ['Да', 'Нет', 'Не рассмотрен', 'Отложено'],
+                legend: {
+                  position: 'bottom',
+                  fontSize: '14px'
+                },
+                plotOptions: {
+                  pie: {
+                    donut: {
+                      labels: {
                         show: true,
-                        label: 'Всего',
-                        color: '#333'
+                        total: {
+                          show: true,
+                          label: 'Всего',
+                          color: '#333'
+                        }
                       }
-                    }
 
+                    }
                   }
-                }
-              },
+                },
+              }
             }
-          }
-          series={[valueYes, valueNo, valueNotReviewed]}
-          type="donut"
-          width="400"
-        />
-      </div>
+            series={[valueYes, valueNo, valueNotReviewed, valuePostponed]}
+            type="donut"
+            width="370"
+          />
+        </div>
+      }
     </div>
   )
 }

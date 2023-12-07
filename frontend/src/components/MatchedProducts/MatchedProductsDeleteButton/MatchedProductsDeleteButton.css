@@ -1,0 +1,19 @@
+.matched-products-delete-button {
+  display: block;
+  width: 100%;
+  margin: 0 auto;
+  padding: 10px;
+  outline: none;
+  border: 2px solid rgb(56, 164, 58);
+  border-radius: 25px;
+  text-align: center;
+  font-size: 14px;
+  background-color: transparent;
+  color: #333;
+  cursor: pointer;
+}
+
+.matched-products-delete-button:hover {
+  background-color: rgb(56, 164, 58);
+  color: #fff;
+}

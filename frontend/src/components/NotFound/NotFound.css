@@ -24,6 +24,27 @@
   color: #222;
 }
 
+.error-button {
+  min-width: 140px;
+  padding: 10px;
+  outline: none;
+  border-radius: 25px;
+  text-align: center;
+  font-size: 14px;
+  background-color: #fff;
+}
+
+.error-button:enabled {
+  cursor: pointer;
+  color: #222;
+  border: 2px solid rgb(56, 164, 58);
+}
+
+.error-button_enabled:hover {
+  background: rgb(56, 164, 58);
+  color: #fff;
+}
+
 .not-found__btn {
   display: block;
   margin: 0 auto;
