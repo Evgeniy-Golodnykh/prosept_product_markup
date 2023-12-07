@@ -67,4 +67,5 @@ async def delete_markup(
         session: AsyncSession = Depends(get_async_session),
 ):
     markup = await check_markup_exists(dealer_price_key, session)
-    return await product_dealer_key_crud.remove(markup, session)
+    await product_dealer_key_crud.remove(markup, session)
+    return markup
