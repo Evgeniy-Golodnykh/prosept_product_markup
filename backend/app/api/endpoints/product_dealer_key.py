@@ -60,7 +60,6 @@ async def create_markup(
 @router.delete(
     '/{dealer_price_key}',
     response_model=ProducDealerKeyDB,
-    status_code=204,
 )
 async def delete_markup(
         dealer_price_key: str,
@@ -68,4 +67,4 @@ async def delete_markup(
 ):
     markup = await check_markup_exists(dealer_price_key, session)
     await product_dealer_key_crud.remove(markup, session)
-    return {'result': 'object delete'}
+    return {'result': 'object deleted'}
