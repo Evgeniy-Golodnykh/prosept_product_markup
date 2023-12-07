@@ -10,7 +10,7 @@ class MarkupStatus(enum.Enum):
     none = 'Не рассмотрен'
     true = 'Да'
     false = 'Нет'
-    delay = 'Отложить'
+    delay = 'Отложено'
 
 
 class DealerPrice(Base):
