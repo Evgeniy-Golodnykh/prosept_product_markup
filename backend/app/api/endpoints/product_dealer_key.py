@@ -59,7 +59,7 @@ async def create_markup(
 
 @router.delete(
     '/{dealer_price_key}',
-    response_model=ProducDealerKeyDB,
+    response_model=dict,
 )
 async def delete_markup(
         dealer_price_key: str,
