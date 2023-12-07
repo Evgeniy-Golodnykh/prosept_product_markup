@@ -1,0 +1,17 @@
+.dealer-column-filter__input {
+  width: 100%;
+  min-width: 140px;
+  padding: 6px 12px 6px 36px;
+  background-color: #f2f2f2;
+  background-image: url('../../../images/dealer-search-icon.svg');
+  background-repeat: no-repeat;
+  background-position: -31px 7px;
+  background-size: 100px;
+  border: 0px;
+  border-radius: 12px;
+  box-sizing: border-box;
+  outline: none;
+  color: #555;
+  font-size: 14px;
+  line-height: 1.4;
+}

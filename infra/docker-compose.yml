@@ -11,7 +11,7 @@ services:
       - ./.env
 
   backend:
-    image: evgenferrum/prosept_product_markup:latest
+    image: evgenferrum/prosept_backend:latest
     environment:
         - TZ=Europe/Moscow
     restart: always
@@ -23,6 +23,24 @@ services:
      - db
     env_file:
       - ./.env
+  
+  frontend:
+    image: evgenferrum/prosept_frontend:latest
+    environment:
+        - TZ=Europe/Moscow
+    restart: always
+    volumes:
+      - ../frontend/:/app/result_build/
+    depends_on:
+      - backend
+  
+  ds:
+    image: evgenferrum/prosept_ds:latest
+    environment:
+        - TZ=Europe/Moscow
+    restart: always
+    depends_on:
+      - frontend
 
   nginx:
     image: nginx:1.21.3
@@ -33,10 +51,12 @@ services:
       - "80:80"
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ../frontend/build:/usr/share/nginx/html/
+      - ../docs/:/usr/share/nginx/html/api/docs/
       - static_value:/var/html/static/
       - media_value:/var/html/media/
     depends_on:
-      - backend
+      - ds
 
 volumes:
   static_value:

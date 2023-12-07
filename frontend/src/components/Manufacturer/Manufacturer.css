@@ -1,0 +1,27 @@
+.manufacturer {
+  padding: 20px;
+  border: 3px solid #f2f2f2;
+  border-right-style: none;
+}
+
+.manufacturer__title {
+  margin: 0 0 78px 0;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #e5e5e5;
+  color: rgb(56, 164, 58);
+  font-size: 24px;
+  font-weight: 700;
+}
+
+
+@media screen and (max-width: 1300px) {
+  .manufacturer {
+    padding: 40px;
+    border-right-style: solid;
+    border-bottom-style: none;
+  }
+
+  .manufacturer__title {
+    margin: 0 0 20px 0;
+  }
+}

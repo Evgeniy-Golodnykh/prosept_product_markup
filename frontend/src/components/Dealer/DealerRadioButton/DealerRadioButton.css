@@ -1,0 +1,29 @@
+.dealer-radio-button-label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 25px;
+  cursor: pointer;
+}
+
+.dealer-radio-button-input {
+  display: none;
+  visibility: hidden;
+}
+
+.dealer-radio-button {
+  display: block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid rgb(56, 164, 58);
+}
+
+.dealer-radio-button-input:checked + .dealer-radio-button {
+  background-image: url('../../../images/checkmark-white.svg');
+  background-size: 12px;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-color: rgb(56, 164, 58);
+}
+

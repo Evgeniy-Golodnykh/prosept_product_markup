@@ -1,0 +1,19 @@
+.dealer {
+  border: 3px solid #f2f2f2;
+  padding: 20px;
+}
+
+.dealer__title {
+  margin: 0;
+  color: rgb(56, 164, 58);
+  font-size: 24px;
+  font-weight: 700;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+@media screen and (max-width: 1300px) {
+  .dealer {
+    padding: 40px;
+  }
+}
