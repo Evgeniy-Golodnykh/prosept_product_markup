@@ -39,6 +39,8 @@ services:
     environment:
         - TZ=Europe/Moscow
     restart: always
+    links:
+      - backend:backend
     depends_on:
       - frontend
 

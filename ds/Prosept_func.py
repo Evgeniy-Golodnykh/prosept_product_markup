@@ -4,6 +4,7 @@ import re
 import requests
 import json
 
+from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 class Prosept_func:
@@ -12,54 +13,62 @@ class Prosept_func:
         pass
 
     def preprocess_dealerprice(self, url_dealerprice):
+        
         df = requests.get(url_dealerprice)
         df = pd.json_normalize(df.json())
-
         df = df[['product_key', 'product_name']]
         df.drop_duplicates(inplace=True)
-
+        
         return df
 
     def preprocess_product(self, url_product):
+        
         df = requests.get(url_product)
         df = pd.json_normalize(df.json())
-
         df = df[['id', 'name']]
         df.dropna(inplace=True)
         df.drop_duplicates(subset='name', inplace=True)
-
         df['id_unique'] = pd.factorize(df['name'])[0]
         df.set_index('id_unique', inplace=True)
 
         return df
 
     def preprocess_text(self, text):
+        
         text = text.lower()
         text = re.compile(r'(?<=[а-яА-Я])(?=[A-Za-z])|(?<=[A-Za-z])(?=[а-яА-Я])').sub(" ", str(text))
         text = re.sub(r'(\d+)\s*мл', lambda x: str(int(x.group(1)) / 1000) + ' ' + 'л', text)
         text = re.sub(r'[!#$%&\'()*+,./:;<=>?@[\]^_`{|}~—\"\\-]+', ' ', text)
-        text = re.sub(r'(средство|мытья|для|чистящее|удаления|очистки)', r'\1 ', str(text))
+        text = re.sub(r'(средство|мытья|для|чистящее|удаления|очистки|плесени|добавка|prosept)', r'\1 ', str(text))
         text = re.sub(r'\b(?:и|для|д|с|ф|п|ая|007|i)\b', '', text)
+
         return text
 
-    def prediction(self, feat, targ, tf_idf, n):
-        vectors_targ = tf_idf.transform(targ).tocsc()
-        vectors_feat = tf_idf.transform(feat).tocsr()
+    def vectorize(self, feat, targ):
 
-        pred = np.zeros((len(feat), n), dtype=int)
-        pred_sim = np.zeros((len(feat), n), dtype=float)
+        corpus = pd.concat([feat, targ]).drop_duplicates().values
+        vectorizer = TfidfVectorizer()
+        vectorizer_fited = vectorizer.fit(corpus)
 
-        for i in range(len(feat)):
-            cos_sim = cosine_similarity(vectors_feat[i], vectors_targ)
-            top_n_indexes = np.argsort(cos_sim)[0, -n:][::-1]
-            top_n_values = cos_sim[0, top_n_indexes]
+        vectors_feat = vectorizer_fited.transform(feat).tocsr()
+        vectors_targ = vectorizer_fited.transform(targ).tocsc()
 
-            pred[i] = top_n_indexes
-            pred_sim[i] = list(np.around(np.array(top_n_values),6))
+        return vectors_feat, vectors_targ
+
+    def prediction(self, feat, vectors_feat, vectors_targ, n):
+
+        pred_sim = cosine_similarity(vectors_feat, vectors_targ)
+        top_n_indices = np.argpartition(pred_sim, -n)[:, -n:]
+        top_n_values = pred_sim[np.arange(len(feat))[:, None], top_n_indices]
+        sorted_indices = np.argsort(top_n_values, axis=1)[:, ::-1]
+
+        pred = top_n_indices[np.arange(len(feat))[:, None], sorted_indices]
+        pred_sim = np.around(top_n_values[np.arange(len(feat))[:, None], sorted_indices], 6)
 
         return pred, pred_sim
 
     def get_id_key(self, pred, df_product):
+        
         result = []
         product_id = dict(df_product['id'])
 
@@ -69,7 +78,7 @@ class Prosept_func:
 
         return result
 
-    def result_to_df_json(self, pred, pred_sim, df_dealerprice):
+    def result_to_json(self, pred, pred_sim, df_dealerprice):
 
         df_result = df_dealerprice['product_key']
         df_result = df_result.to_frame()
@@ -78,19 +87,12 @@ class Prosept_func:
         json_data = df_result.to_json(orient='records')
         json_result = json.loads(json_data)
 
-        return df_result, json_result
+        return json_result
 
     def save_json(self, url, data):
+        
         if url:
             requests.post(url, json=data)
         else:
             with open('result.json', 'w') as file:
                 json.dump(data, file)
-
-    def metric(self, actual, pred, n):
-        count = 0
-        for i in range(len(actual)):
-            if actual[i] in pred[i][:n]:
-                count += 1
-
-        return round(count / len(actual), 4)
