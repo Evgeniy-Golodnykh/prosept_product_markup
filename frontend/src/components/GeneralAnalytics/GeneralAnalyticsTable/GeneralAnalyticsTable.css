@@ -4,16 +4,17 @@
 }
 
 .general-analytics-table__title {
+  margin: 0;
   text-align: center;
   font-size: 24px;
   font-weight: 700;
   color: rgb(56, 164, 58);
   padding-bottom: 14px;
   border-bottom: 1px solid #e5e5e5;
-  margin: 0;
 }
 
 .general-analytics-table {
+  margin: 20px 0 0 0;
   width: 100%;
   border-collapse: collapse;
   color: #333;
@@ -23,7 +24,7 @@
 .general-analytics-table__cell, .general-analytics-table__header-cell {
   border: 1px solid #f2f2f2;
   padding: 8px;
-  max-width: 300px;
+  max-width: 150px;
 }
 
 .general-analytics-table__cell {
@@ -45,8 +46,8 @@ table tr:hover {
 .general-analytics-table__container {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  min-height: 60px;
+  justify-content: space-between;
+  min-height: 75px;
 }
 
 .general-analytics-table__sort-header {

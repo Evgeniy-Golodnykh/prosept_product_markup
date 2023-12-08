@@ -6,6 +6,7 @@ from pydantic import BaseModel
 class ProductDealerKeyCreate(BaseModel):
     key_id: str
     product_id: int
+    matching_position: int
 
 
 class ProducDealerKeyDB(ProductDealerKeyCreate):

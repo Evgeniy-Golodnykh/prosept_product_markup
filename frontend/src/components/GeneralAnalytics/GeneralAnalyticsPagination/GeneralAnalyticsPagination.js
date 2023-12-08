@@ -3,6 +3,12 @@ import useOutsideClick from '../../../hooks/useOutsideClick';
 
 import './GeneralAnalyticsPagination.css';
 
+import {
+  minNumbOfPages,
+  middleNumbOfPages,
+  maxNumbOfPages,
+} from '../../../utils/constants';
+
 function GeneralAnalyticsPagination({
   pageIndex,
   pageOptions,
@@ -67,9 +73,9 @@ function GeneralAnalyticsPagination({
         <ul
           className={`general-analytics-pagination__dropdown-menu ${selectMenuIsOpen && 'general-analytics-pagination__dropdown-menu_open'}`}
           onClick={handleSelectOption}>
-          <li className='general-analytics-pagination__dropdown-item' value='10'>10 позиций</li>
-          <li className='general-analytics-pagination__dropdown-item' value='25'>25 позиций</li>
-          <li className='general-analytics-pagination__dropdown-item' value='50'>50 позиций</li>
+          <li className='general-analytics-pagination__dropdown-item' value={minNumbOfPages}>{minNumbOfPages} позиций</li>
+          <li className='general-analytics-pagination__dropdown-item' value={middleNumbOfPages}>{middleNumbOfPages} позиций</li>
+          <li className='general-analytics-pagination__dropdown-item' value={maxNumbOfPages}>{maxNumbOfPages} позиций</li>
         </ul>
       </div>
       <div className='general-analytics-pagination__container'>

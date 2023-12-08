@@ -5,8 +5,9 @@ import './ManufacturerRadioButton.css';
 function ManufacturerRadioButton(props) {
 
   function handleChange(evt) {
-    props.setRadioButtonIsSelected(props.rowId)
-    props.getRadioValue(props.rowId)
+    props.setRadioButtonIsSelected(props.rowId);
+    props.getRadioValue(props.rowId);
+    props.getMatchingPos(props.rowIndex + 1);
   }
 
   return (

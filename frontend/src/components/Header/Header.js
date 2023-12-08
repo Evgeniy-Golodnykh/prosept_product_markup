@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import './Header.css';
+
 import logo from '../../images/prosept-logo.svg';
 
 import DropdownMenu from '../DropdownMenu/DropdownMenu';

@@ -3,6 +3,12 @@ import useOutsideClick from '../../../hooks/useOutsideClick';
 
 import './DealerPagination.css';
 
+import {
+  minNumbOfPages,
+  middleNumbOfPages,
+  maxNumbOfPages,
+} from '../../../utils/constants';
+
 function DealerPagination({
   pageIndex,
   pageOptions,
@@ -66,9 +72,9 @@ function DealerPagination({
         <ul
           className={`dealer-pagination__dropdown-menu ${selectMenuIsOpen && 'dealer-pagination__dropdown-menu_open'}`}
           onClick={handleSelectOption}>
-          <li className='dealer-pagination__dropdown-item' value='10'>10 позиций</li>
-          <li className='dealer-pagination__dropdown-item' value='25'>25 позиций</li>
-          <li className='dealer-pagination__dropdown-item' value='50'>50 позиций</li>
+          <li className='dealer-pagination__dropdown-item' value={minNumbOfPages}>{minNumbOfPages} позиций</li>
+          <li className='dealer-pagination__dropdown-item' value={middleNumbOfPages}>{middleNumbOfPages} позиций</li>
+          <li className='dealer-pagination__dropdown-item' value={maxNumbOfPages}>{maxNumbOfPages} позиций</li>
         </ul>
       </div>
       <div className='dealer-pagination__container'>

@@ -5,7 +5,7 @@
 }
 
 .manufacturer__title {
-  margin: 0 0 78px 0;
+  margin: 0;
   padding-bottom: 14px;
   border-bottom: 1px solid #e5e5e5;
   color: rgb(56, 164, 58);
@@ -14,7 +14,7 @@
 }
 
 
-@media screen and (max-width: 1300px) {
+@media screen and (max-width: 1428px) {
   .manufacturer {
     padding: 40px;
     border-right-style: solid;

@@ -4,6 +4,7 @@ import { useAsyncDebounce } from 'react-table';
 import './DealerGlobalFilter.css';
 
 function DealerGlobalFilter({ filterValue, setFilterValue }) {
+
   const [value, setValue] = useState(filterValue)
 
   const onChange = useAsyncDebounce(value => {

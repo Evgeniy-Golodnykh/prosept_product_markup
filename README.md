@@ -1,5 +1,10 @@
 # Prosept Product Markup
 
+### Information for the reviewer
+```diff
+- Use only PostgreSQL, some models has type ARRAY.
+```
+
 ### Description
 Manufacturer and marketplace product matching [app](http://prosept.sytes.net)
 
@@ -33,7 +38,7 @@ FIRST_SUPERUSER_LAST_NAME=some_lastname
 MATCHING_COUNT=5
 DATABASE_URL=postgresql+asyncpg://postgres:postgres@db:5432/prosept
 ```
-6. To create database use command
+6. To create database (use only PostgreSQL) use command
 ```bash
 alembic upgrade head
 ```
@@ -41,6 +46,9 @@ alembic upgrade head
 ```bash
 uvicorn app.main:app --reload
 ```
+
+### Swagger: API Documentation
+http://127.0.0.1:8000/docs/
 
 ### CI/CD pipeline status
 [![Prosept product markup workflow](https://github.com/Evgeniy-Golodnykh/prosept_product_markup/actions/workflows/prosept_product_markup_workflow.yml/badge.svg)](https://github.com/Evgeniy-Golodnykh/prosept_product_markup/actions/workflows/prosept_product_markup_workflow.yml)
