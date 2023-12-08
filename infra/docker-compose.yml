@@ -27,7 +27,7 @@ services:
         - TZ=Europe/Moscow
     restart: always
     volumes:
-      - ../frontend/:/app/result_build/
+      - ../frontend/build/:/app/build/
     depends_on:
       - backend
   
