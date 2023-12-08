@@ -1,6 +1,6 @@
 class MainApi {
   constructor() {
-    this._url = 'http://localhost:8000';
+    this._url = 'http://prosept.sytes.net';
     this._headers = {
       'Content-Type': 'application/json'
     }
