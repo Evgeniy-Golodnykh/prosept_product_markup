@@ -31,8 +31,6 @@ function App() {
   const [popup, setPopup] = useState('');
   const [error, setError] = useState('');
   const [isPostponed, setIsPostponed] = useState('');
-  const [isLoadingDealerProducts, setIsLoadingDealerProducts] = useState(false);
-  const [isLoadingRecomendations, setIsLoadingRecomendations] = useState(false);
 
   function showPopupMsg(setter, msg) {
     setter(msg)
@@ -42,7 +40,6 @@ function App() {
   }
 
   function handleComparePosition(productId, matchingPos) {
-    setIsLoadingDealerProducts(true);
     Promise.all([mainApi.comparePosition(productKey, productId, matchingPos), mainApi.updatePosition(productKey, yes)])
       .then(() => {
         setRecommendation([]);
@@ -55,16 +52,9 @@ function App() {
         setRecommendation([]);
         showPopupMsg(setError, somethingWentWrong)
       })
-      // Set-timeout для более наглядной презентации проекта
-      .finally(() => {
-        setTimeout(() => {
-          setIsLoadingDealerProducts(false)
-        }, 1000)
-      });
   }
 
   function handleNotComparePosition() {
-    setIsLoadingDealerProducts(true);
     mainApi.updatePosition(productKey, no)
       .then(() => {
         setRecommendation([]);
@@ -77,16 +67,9 @@ function App() {
         setRecommendation([]);
         showPopupMsg(setError, somethingWentWrong)
       })
-      // Set-timeout для более наглядной презентации проекта
-      .finally(() => {
-        setTimeout(() => {
-          setIsLoadingDealerProducts(false)
-        }, 1000)
-      });
   }
 
   function handlePostponePosition() {
-    setIsLoadingDealerProducts(true);
     mainApi.updatePosition(productKey, postponed)
       .then(() => {
         setRecommendation([]);
@@ -99,29 +82,18 @@ function App() {
         setRecommendation([]);
         showPopupMsg(setError, somethingWentWrong)
       })
-      // Set-timeout для более наглядной презентации проекта
-      .finally(() => {
-        setTimeout(() => {
-          setIsLoadingDealerProducts(false)
-        }, 1000)
-      });
   }
 
   function getRecomendationToDealerProduct(value) {
-    setIsLoadingRecomendations(true);
     setProductKey(value)
     mainApi.getRecomendation(value)
       .then((recommendation) => {
         setRecommendation(recommendation);
       })
       .catch((err) => console.error(err))
-      .finally(() => {
-        setIsLoadingRecomendations(false);
-      });
   }
 
   function getPendingDealersProducts() {
-    setIsLoadingDealerProducts(true);
     mainApi.getPendingDealersProducts()
       .then((pendingDealersProducts) => {
         mainApi.getAllDealers()
@@ -142,9 +114,6 @@ function App() {
           })
       })
       .catch((err) => console.error(err))
-      .finally(() => {
-        setIsLoadingDealerProducts(false)
-      });
   }
 
   useEffect(() => {
@@ -164,8 +133,6 @@ function App() {
           getRecomendationToDealerProduct={getRecomendationToDealerProduct}
           setIsPostponed={setIsPostponed}
           isPostponed={isPostponed}
-          isLoadingDealerProducts={isLoadingDealerProducts}
-          isLoadingRecomendations={isLoadingRecomendations}
           popup={popup}
           dealers={dealers}
           error={error}

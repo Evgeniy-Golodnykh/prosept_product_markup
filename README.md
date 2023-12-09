@@ -1,6 +1,7 @@
 # Prosept Product Markup
 
 ### Information for the reviewer
+Follow [this link](https://cloud.mail.ru/public/tuMr/pRp7a7Qzj) to download the project
 ```diff
 - Use only PostgreSQL, some models has type ARRAY.
 ```
