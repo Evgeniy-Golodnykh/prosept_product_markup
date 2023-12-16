@@ -37,7 +37,7 @@ FIRST_SUPERUSER_LAST_NAME=some_lastname
 MATCHING_COUNT=5
 DATABASE_URL=postgresql+asyncpg://postgres:postgres@db:5432/prosept
 ```
-7. To create database (use only PostgreSQL) use command
+7. To create database (only PostgreSQL) use command
 ```bash
 alembic upgrade head
 ```
