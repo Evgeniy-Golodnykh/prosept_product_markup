@@ -49,6 +49,9 @@ uvicorn app.main:app --reload
 ### Swagger: API Documentation
 http://127.0.0.1:8000/docs/
 
+### Technology
+[Python](https://www.python.org), [FastAPI](https://fastapi.tiangolo.com/), [SQLAlchemy](https://www.sqlalchemy.org), [PostgreSQL](https://www.postgresql.org/), [Docker](https://www.docker.com/)
+
 ### Authors
 Backend:
 - [Evgeniy Golodnykh](https://github.com/Evgeniy-Golodnykh)
