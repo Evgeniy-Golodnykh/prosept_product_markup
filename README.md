@@ -6,7 +6,7 @@ Manufacturer and marketplace product matching app
 ### Quick Start backend
 1. Clone repo
 ```bash
-git git@github.com:Evgeniy-Golodnykh/prosept_product_markup.git
+git clone git@github.com:Evgeniy-Golodnykh/prosept_product_markup.git
 ```
 2. Creates a virtual environment
 ```bash
